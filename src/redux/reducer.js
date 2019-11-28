@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 
 import {
   SELECT_BOARD,
-  SET_VIEW,
 } from './actions.js';
 
 const INITIAL_STATE = {
@@ -45,11 +44,6 @@ export const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         selectedBoard: action.board
       };
-    case SET_VIEW:
-      return {
-        ...state,
-        view: action.view
-      };
     default:
       return state;
   }
@@ -57,7 +51,6 @@ export const reducer = (state = INITIAL_STATE, action) => {
 
 const getQuotesSelector = state => state.quotes;
 const getSelectedBoardSelector = state => state.selectedBoard;
-export const getSetView = state => state.view;
 
 export const getVisibleQuotes = createSelector(
   getQuotesSelector,

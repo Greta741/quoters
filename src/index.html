@@ -32,8 +32,12 @@
       <a href="/">Current (Quotes)</a>
       <a href="/quotes">Quotes</a>
       <a href="/boards">Boards</a>
-      <a href="/add">Add</a>
     </nav>
+
+    <div style="display: none">
+      <a id="addQuote" href="/add-quote"></a>
+      <a id="addBoard" href="/add-board"></a>
+    </div>
 
     <main></main>
     <script src="./vendor/webcomponents-loader.js"></script>
@@ -50,7 +54,15 @@
         const stillTreashold = 1;
         let magnitude = Math.hypot(acl.x, acl.y, acl.z);
         if (magnitude > shakeTreashold) {
-          window.history.pushState('data', 'title', 'add');
+          const currentPathName = window.location.pathname;
+          alert(currentPathName);
+          if (currentPathName === '/' || currentPathName.includes('quotes')) {
+            document.getElementById('addQuote').click()
+          }
+
+          if (currentPathName.includes('boards')) {
+            document.getElementById('addBoard').click()
+          }
           shaking = true;
         } else if (magnitude < stillTreashold && shaking) {
           shaking = false;

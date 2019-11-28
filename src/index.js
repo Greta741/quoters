@@ -30,11 +30,6 @@ function initRouter() {
       action: () => import(/* webpackChunkName: "quotes" */ './views/boards-view')
     },
     {
-      path: '/add',
-      component: 'add-view',
-      action: () => import(/* webpackChunkName: "add" */ './views/add-view')
-    },
-    {
       path: '/add-quote',
       component: 'add-quote-view',
       action: () => import(/* webpackChunkName: "add" */ './views/add-quote-view')
