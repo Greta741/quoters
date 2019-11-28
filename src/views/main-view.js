@@ -1,10 +1,11 @@
-import { html, requestUpdate } from "lit-html";
+import { html } from "lit-html";
 import { getQuotesSelector } from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
 import { BaseView } from "./base-view.js";
 import "../components/my-quote.js";
 import { HttpService } from "../redux/service";
+import moment from "moment";
 
 class MainView extends connect(store)(BaseView) {
   constructor() {
@@ -14,6 +15,7 @@ class MainView extends connect(store)(BaseView) {
     this.loaded = false;
 
     this.currentQuote = 0;
+    this.currentDate = "";
   }
 
   static get properties() {
@@ -37,6 +39,10 @@ class MainView extends connect(store)(BaseView) {
       this.httpService.getQuotes(null);
     }
     this.loaded = true;
+
+    this.currentDate = moment(this.quotes[this.currentQuote].date).format(
+      "YYYY-MM-DD"
+    );
   }
 
   getRandomQuote() {
@@ -167,8 +173,7 @@ class MainView extends connect(store)(BaseView) {
             <blockquote>
               <p class="quote">${this.quotes[this.currentQuote].text}</p>
               <p class="author">
-                ${this.quotes[this.currentQuote].author},
-                ${this.quotes[this.currentQuote].date}
+                ${this.quotes[this.currentQuote].author}, ${this.currentDate}
                 <span class="author-name"></span>
               </p>
             </blockquote>
