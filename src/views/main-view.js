@@ -7,6 +7,10 @@ import "../components/my-quote.js";
 import { HttpService } from "../redux/service";
 
 class MainView extends connect(store)(BaseView) {
+  currentQuote = 0;
+  progressWidth = 0;
+  progress = setInterval(this.timerProgress(), 40);
+
   constructor() {
     super();
 
@@ -22,8 +26,6 @@ class MainView extends connect(store)(BaseView) {
 
   stateChanged(state) {
     this.quotes = getQuotesSelector(state);
-
-    console.log(this.quotes);
   }
 
   loadQuotes() {
@@ -31,13 +33,67 @@ class MainView extends connect(store)(BaseView) {
       return;
     }
     const board = this.location.params.board;
-    console.log(board);
     if (board) {
       this.httpService.getQuotes(board);
     } else {
       this.httpService.getQuotes(null);
     }
     this.loaded = true;
+  }
+
+  timerProgress() {
+    // document.querySelector(".quote-progress").width(progressWidth + "%");
+
+    console.log(document.querySelector(".quote-progress"));
+
+    if (progressWidth < 100) {
+      progressWidth += 0.1;
+    } else {
+      changeQuote();
+      progressWidth = 0;
+    }
+  }
+
+  setQuote() {
+    document
+      .querySelector(".quote")
+      .html('"' + listQuotes[currentQuote].quote + '"');
+    document
+      .querySelector(".author-name")
+      .html(listQuotes[currentQuote].author);
+    tweetQuote();
+  }
+
+  getRandomQuote() {
+    currentQuote = Math.round(Math.random() * listQuotes.length);
+    console.log(currentQuote);
+    progressWidth = 0;
+  }
+
+  changeQuote() {
+    // $("blockquote").fadeToggle( "slow", "linear" );
+    if (currentQuote < listQuotes.length - 1) {
+      currentQuote++;
+    } else {
+      currentQuote = 0;
+    }
+    setQuote();
+  }
+
+  nextSlide() {
+    console.log(this.quotes);
+    changeQuote();
+    progressWidth = 0;
+  }
+
+  prevSlide() {
+    if (currentQuote > 0) {
+      currentQuote--;
+    } else {
+      currentQuote = listQuotes.length - 1;
+    }
+    setQuote();
+    progressWidth = 0;
   }
 
   render() {
@@ -129,8 +185,6 @@ class MainView extends connect(store)(BaseView) {
         }
       </style>
 
-      <script type="module" src="./slide.js"></script>
-
       <div class="container">
         <div class="panel-quote">
           <div class="quote-progress"></div>
@@ -144,13 +198,13 @@ class MainView extends connect(store)(BaseView) {
                   </p>
                 </blockquote>
                 <div class="quote-nav">
-                  <button class="previous">
+                  <button @click="${this.prevSlide}" class="previous">
                     <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                   </button>
-                  <button class="random">
+                  <button @click="${this.getRandomQuote}" class="random">
                     <i class="fa fa-random" aria-hidden="true"></i>
                   </button>
-                  <button class="next">
+                  <button @click="${this.nextSlide}" class="next">
                     <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                   </button>
                 </div>
