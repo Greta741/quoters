@@ -41,7 +41,7 @@ class MainView extends connect(store)(BaseView) {
     this.loaded = true;
 
     this.currentDate = moment(this.quotes[this.currentQuote].date).format(
-      "YYYY-MM-DD"
+      "YYYY"
     );
   }
 
@@ -66,7 +66,6 @@ class MainView extends connect(store)(BaseView) {
   prevSlide() {
     if (this.currentQuote > 0) {
       this.currentQuote--;
-      console.log(this.currentQuote);
     } else {
       this.currentQuote = this.quotes.length - 1;
     }
@@ -171,7 +170,9 @@ class MainView extends connect(store)(BaseView) {
           <div class="quote-progress"></div>
           <div>
             <blockquote>
-              <p class="quote">${this.quotes[this.currentQuote].text}</p>
+              <p class="quote">
+                ${this.quotes[this.currentQuote].text}
+              </p>
               <p class="author">
                 ${this.quotes[this.currentQuote].author}, ${this.currentDate}
                 <span class="author-name"></span>
