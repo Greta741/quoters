@@ -2,8 +2,19 @@ import { html } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../redux/store.js';
 import { BaseView } from '../views/base-view.js';
+import {disableCensor} from "../redux/actions";
+
+const clicksRequired = 7;
+const clicksResetTime = 3000;
 
 class MenuWrapperView extends connect(store)(BaseView) {
+    constructor() {
+        super();
+
+        this.clicksCount = 0;
+        this.timerStarted = false;
+    }
+
     static get properties() {
         return {
             boards: { type: Array }
@@ -12,6 +23,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
 
     stateChanged(state) {
         this.boards = state.boards;
+        this.disableCensor = state.disableCensor;
     }
 
     render() {
@@ -183,7 +195,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
       }
     </style>
 
-    <div class="header"><h1>Quoters</h1></div>
+    <div class="header"><h1 @click="${this.clickName}">Quoters</h1></div>
     <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" />
     <label for="openSidebarMenu" class="sidebarIconToggle">
       <div class="spinner diagonal part-1"></div>
@@ -209,6 +221,25 @@ class MenuWrapperView extends connect(store)(BaseView) {
       <a id="addBoard" href="/add-board"></a>
     </div>
     `;
+    }
+
+    clickName() {
+        if (this.disableCensor) {
+            return;
+        }
+
+        this.clicksCount++;
+        if (!this.timerStarted) {
+            this.timerStarted = true;
+            setTimeout(() => {
+                this.clicksCount = 0;
+                this.timerStarted = false;
+            }, clicksResetTime)
+        }
+        if (this.clicksCount >= clicksRequired) {
+            store.dispatch(disableCensor());
+            alert('NSFW activated');
+        }
     }
 }
 

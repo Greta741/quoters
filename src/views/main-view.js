@@ -5,6 +5,7 @@ import { store } from "../redux/store.js";
 import { BaseView } from "./base-view.js";
 import "../components/my-quote.js";
 import { HttpService } from "../redux/service";
+import moment from "moment";
 
 class MainView extends connect(store)(BaseView) {
   constructor() {
@@ -14,6 +15,7 @@ class MainView extends connect(store)(BaseView) {
     this.loaded = false;
 
     this.currentQuote = 0;
+    this.currentDate = "";
   }
 
   static get properties() {
@@ -37,12 +39,19 @@ class MainView extends connect(store)(BaseView) {
       this.httpService.getQuotes(null);
     }
     this.loaded = true;
+
+    this.currentDate = moment(this.quotes[this.currentQuote].date).format(
+      "YYYY"
+    );
   }
 
   getRandomQuote() {
     this.currentQuote = Math.round(Math.random() * this.quotes.length);
-    console.log(this.currentQuote);
-    this.progressWidth = 0;
+    this.setQuote();
+  }
+
+  setQuote() {
+    this.requestUpdate();
   }
 
   changeQuote() {
@@ -51,10 +60,7 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = 0;
     }
-  }
-
-  nextSlide() {
-    this.changeQuote();
+    this.setQuote();
   }
 
   prevSlide() {
@@ -63,6 +69,11 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = this.quotes.length - 1;
     }
+    this.setQuote();
+  }
+
+  nextSlide() {
+    this.changeQuote();
   }
 
   render() {
@@ -158,27 +169,26 @@ class MainView extends connect(store)(BaseView) {
         <div class="panel-quote">
           <div class="quote-progress"></div>
           <div>
-            ${this.quotes.map(
-              quote => html`
-                <blockquote>
-                  <p class="quote">${quote.text}</p>
-                  <p class="author">
-                    - ${quote.author}<span class="author-name"></span>
-                  </p>
-                </blockquote>
-                <div class="quote-nav">
-                  <button @click="${this.prevSlide}" class="previous">
-                    <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-                  </button>
-                  <button @click="${this.getRandomQuote}" class="random">
-                    <i class="fa fa-random" aria-hidden="true"></i>
-                  </button>
-                  <button @click="${this.nextSlide}" class="next">
-                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                  </button>
-                </div>
-              `
-            )}
+            <blockquote>
+              <p class="quote">
+                ${this.quotes[this.currentQuote].text}
+              </p>
+              <p class="author">
+                ${this.quotes[this.currentQuote].author}, ${this.currentDate}
+                <span class="author-name"></span>
+              </p>
+            </blockquote>
+            <div class="quote-nav">
+              <button @click="${this.prevSlide}" class="previous">
+                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+              </button>
+              <button @click="${this.getRandomQuote}" class="random">
+                <i class="fa fa-random" aria-hidden="true"></i>
+              </button>
+              <button @click="${this.nextSlide}" class="next">
+                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

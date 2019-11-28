@@ -48,3 +48,42 @@ function initRouter() {
     }
   ]);
 }
+
+let acl = null;
+
+function doShakyShaky() {
+  alert ('shaky shaky will work')
+  let shaking = false;
+
+  function onreading() {
+    const shakeTreashold = 3 * 9.8;
+    const stillTreashold = 1;
+    let magnitude = Math.hypot(acl.x, acl.y, acl.z);
+    if (magnitude > shakeTreashold) {
+      const currentPathName = window.location.pathname;
+      if (currentPathName === "/" || currentPathName.includes("quotes")) {
+        document.getElementById("addQuote").click();
+      }
+
+      if (currentPathName.includes("boards")) {
+        document.getElementById("addBoard").click();
+      }
+      shaking = true;
+    } else if (magnitude < stillTreashold && shaking) {
+      shaking = false;
+    }
+  }
+
+  acl.addEventListener("reading", onreading);
+}
+
+function startShakyShaky() {
+  acl = new LinearAccelerationSensor({ frequency: 60 });
+  acl.addEventListener("activate", doShakyShaky);
+  acl.addEventListener("error", error => {
+    alert('no shaky shaky for you')
+  });
+  acl.start();
+}
+
+window.addEventListener("load", startShakyShaky);
