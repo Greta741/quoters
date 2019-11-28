@@ -5,7 +5,6 @@ import { store } from "../redux/store.js";
 import { BaseView } from "./base-view.js";
 import "../components/my-quote.js";
 import { HttpService } from "../redux/service";
-import moment from "moment";
 
 class MainView extends connect(store)(BaseView) {
   constructor() {
@@ -15,7 +14,10 @@ class MainView extends connect(store)(BaseView) {
     this.loaded = false;
 
     this.currentQuote = 0;
-    this.currentDate = "";
+    this.currentDate = new Date().getFullYear();
+    this.randomColor = `#${Math.random()
+      .toString(16)
+      .substr(-6)}`;
 
     setTimeout(() => {
       this.changeQuote();
@@ -43,12 +45,6 @@ class MainView extends connect(store)(BaseView) {
       this.httpService.getQuotes(null);
     }
     this.loaded = true;
-
-    if (this.quotes[this.currentQuote] && this.quotes[this.currentQuote].date) {
-      const date = this.quotes[this.currentQuote].date;
-      this.currentDate = moment(date).format("YYYY");
-      console.log(this.currentDate);
-    }
   }
 
   getRandomQuote() {
@@ -66,6 +62,7 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = 0;
     }
+
     this.setQuote();
   }
 
@@ -110,7 +107,7 @@ class MainView extends connect(store)(BaseView) {
           min-width: 60%;
           margin: auto;
           box-sizing: border-box;
-          background-color: #fff;
+          opacity: 0.85;
         }
 
         .social-share {
@@ -164,6 +161,11 @@ class MainView extends connect(store)(BaseView) {
           margin: auto;
         }
 
+        .fa {
+          font-size: 2rem;
+          color: #000;
+        }
+
         /* Media Queries */
         @media screen and (max-width: 460px) {
           .panel-quote {
@@ -177,15 +179,20 @@ class MainView extends connect(store)(BaseView) {
       </style>
 
       <div class="container">
-        <div class="panel-quote">
+        <div class="panel-quote" style="background-color: ${this.randomColor}">
           <div class="quote-progress"></div>
           <div>
             <blockquote>
               <p class="quote">
-                ${this.quotes && this.quotes[this.currentQuote] ? this.quotes[this.currentQuote].text : ''}
+                ${this.quotes && this.quotes[this.currentQuote]
+                  ? this.quotes[this.currentQuote].text
+                  : ""}
               </p>
               <p class="author">
-                ${this.quotes && this.quotes[this.currentQuote] ? this.quotes[this.currentQuote].author : ''}, ${this.currentDate}
+                ${this.quotes && this.quotes[this.currentQuote]
+                  ? this.quotes[this.currentQuote].author
+                  : ""},
+                ${this.currentDate}
                 <span class="author-name"></span>
               </p>
             </blockquote>
