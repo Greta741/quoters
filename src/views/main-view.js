@@ -1,4 +1,4 @@
-import { html } from "lit-html";
+import { html, requestUpdate } from "lit-html";
 import { getQuotesSelector } from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
@@ -41,8 +41,11 @@ class MainView extends connect(store)(BaseView) {
 
   getRandomQuote() {
     this.currentQuote = Math.round(Math.random() * this.quotes.length);
-    console.log(this.currentQuote);
-    this.progressWidth = 0;
+    this.setQuote();
+  }
+
+  setQuote() {
+    this.requestUpdate();
   }
 
   changeQuote() {
@@ -51,16 +54,17 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = 0;
     }
+    this.setQuote();
   }
 
   prevSlide() {
     if (this.currentQuote > 0) {
       this.currentQuote--;
-
       console.log(this.currentQuote);
     } else {
       this.currentQuote = this.quotes.length - 1;
     }
+    this.setQuote();
   }
 
   nextSlide() {
@@ -163,9 +167,9 @@ class MainView extends connect(store)(BaseView) {
             <blockquote>
               <p class="quote">${this.quotes[this.currentQuote].text}</p>
               <p class="author">
-                - ${this.quotes[this.currentQuote].author}<span
-                  class="author-name"
-                ></span>
+                ${this.currentQuote} - ${this.quotes[this.currentQuote].author},
+                ${this.quotes[this.currentQuote].date}
+                <span class="author-name"></span>
               </p>
             </blockquote>
             <div class="quote-nav">
