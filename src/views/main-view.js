@@ -40,9 +40,9 @@ class MainView extends connect(store)(BaseView) {
     }
     this.loaded = true;
 
-    this.currentDate = moment(this.quotes[this.currentQuote].date).format(
-      "YYYY"
-    );
+    const date = this.quotes.length && this.quotes[this.currentQuote].date;
+    this.currentDate = moment(date).format("YYYY");
+    console.log(this.currentDate);
   }
 
   getRandomQuote() {
@@ -171,10 +171,11 @@ class MainView extends connect(store)(BaseView) {
           <div>
             <blockquote>
               <p class="quote">
-                ${this.quotes[this.currentQuote].text}
+                ${this.quotes.length && this.quotes[this.currentQuote].text}
               </p>
               <p class="author">
-                ${this.quotes[this.currentQuote].author}, ${this.currentDate}
+                ${this.quotes.length && this.quotes[this.currentQuote].author},
+                ${this.currentDate}
                 <span class="author-name"></span>
               </p>
             </blockquote>
