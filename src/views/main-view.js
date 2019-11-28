@@ -31,19 +31,18 @@ class MainView extends connect(store)(BaseView) {
     this.updateQuotes();
 
     return html`
-<link rel="stylesheet" type="text/css" href="../styles.css" media="all" />
 
     Room: ${this.location.params.room}
     <ul>
     ${
-          this.quotes.map(
+        this.quotes.map(
             quote => html`
                 <li>
                     <my-quote quoteText="${quote.quote}"  qouteAuthor="${quote.author}"></my-quote>
                 </li>
                 `
-          )
-        }
+        )
+    }
     </ul>
     `;
   }
