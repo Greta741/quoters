@@ -55,7 +55,6 @@
           let magnitude = Math.hypot(acl.x, acl.y, acl.z);
           if (magnitude > shakeTreashold) {
             const currentPathName = window.location.pathname;
-            alert(currentPathName);
             if (currentPathName === "/" || currentPathName.includes("quotes")) {
               document.getElementById("addQuote").click();
             }
