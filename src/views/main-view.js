@@ -1,5 +1,5 @@
 import { html } from "lit-element";
-import { getVisibleQuotes } from "../redux/reducer.js";
+import { getQuotesSelector } from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
 import { BaseView } from "./base-view.js";
@@ -21,7 +21,7 @@ class MainView extends connect(store)(BaseView) {
     }
 
     stateChanged(state) {
-        this.quotes = getVisibleQuotes(state);
+        this.quotes = getQuotesSelector(state);
     }
 
     loadQuotes() {
