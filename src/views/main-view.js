@@ -51,12 +51,12 @@ class MainView extends connect(store)(BaseView) {
         }
 
         .container {
-          margin: 0 auto;
+          margin: 5rem auto;
         }
 
         .panel-quote {
           position: absolute;
-          top: 50%;
+          top: 80%;
           left: 50%;
           transform: translate(-50%, -50%);
           min-width: 400px;
@@ -130,16 +130,6 @@ class MainView extends connect(store)(BaseView) {
             ${this.quotes.map(
               quote => html`
                 <blockquote>
-                  <div class="social-share">
-                    <a
-                      href="#"
-                      id="quote-tweet"
-                      title="Tweet this quote"
-                      target="_blank"
-                    >
-                      <i class="fa fa-twitter" aria-hidden="true"></i>
-                    </a>
-                  </div>
                   <p class="quote">${quote.quote}</p>
                   <p class="author">
                     - ${quote.author}<span class="author-name"></span>
