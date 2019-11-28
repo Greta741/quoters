@@ -1,4 +1,4 @@
-import { html } from "lit-element";
+import { html } from "lit-html";
 import { getVisibleQuotes } from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
@@ -38,15 +38,6 @@ class MainView extends connect(store)(BaseView) {
         }
 
         button:hover {
-          opacity: 1;
-        }
-
-        a {
-          text-decoration: none;
-          opacity: 0.3;
-        }
-
-        a:hover {
           opacity: 1;
         }
 
@@ -123,6 +114,8 @@ class MainView extends connect(store)(BaseView) {
         }
       </style>
 
+      <script type="module" src="./slide.js"></script>
+
       <div class="container">
         <div class="panel-quote">
           <div class="quote-progress"></div>
@@ -151,7 +144,6 @@ class MainView extends connect(store)(BaseView) {
           </div>
         </div>
       </div>
-      <ul></ul>
     `;
   }
 }
