@@ -3,23 +3,23 @@ import { connect } from 'pwa-helpers';
 import { store } from '../redux/store.js';
 import { BaseView } from './base-view.js';
 
-class RoomsView extends connect(store)(BaseView) {
+class BoardsView extends connect(store)(BaseView) {
   static get properties() {
     return {
-      rooms: { type: Array }
+      boards: { type: Array }
     };
   }
 
   stateChanged(state) {
-    this.rooms = state.rooms;
+    this.boards = state.boards;
   }
 
   render() {
     return html`
     ${
-          this.rooms.map(
-            room => html`
-                  <a href="/quotes/${room}">${room}</a>
+          this.boards.map(
+            board => html`
+                  <a href="/quotes/${board}">${board}</a>
                 `
           )
         }
@@ -27,4 +27,4 @@ class RoomsView extends connect(store)(BaseView) {
   }
 }
 
-customElements.define('rooms-view', RoomsView);
+customElements.define('boards-view', BoardsView);

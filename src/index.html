@@ -31,7 +31,7 @@
     <nav>
       <a href="/">Current (Quotes)</a>
       <a href="/quotes">Quotes</a>
-      <a href="/rooms">Rooms</a>
+      <a href="/boards">Boards</a>
       <a href="/add">Add</a>
     </nav>
 
@@ -41,11 +41,11 @@
 
     <script>
         let acl = null;
-  
+
         function doShakyShaky() {
       alert('initiate shaky shaky')
       var shaking = false;
-  
+
       function onreading() {
         const shakeTreashold = 3 * 9.8;
         const stillTreashold = 1;
@@ -56,14 +56,14 @@
         } else if (magnitude < stillTreashold && shaking) {
           shaking = false;
           acl.removeEventListener('reading', onreading);
-  
+
           alert('You did not shaky shaky')
         }
       }
-      
+
       acl.addEventListener('reading', onreading);
     }
-  
+
     function startShakyShaky() {
       acl = new LinearAccelerationSensor({frequency: 60});
       acl.addEventListener('activate', this.doShakyShaky);
@@ -72,10 +72,10 @@
       });
       acl.start();
     }
-  
+
     window.addEventListener('load', startShakyShaky)
-      
-      
+
+
       </script>
   </body>
 </html>
