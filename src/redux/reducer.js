@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 
 import {
   SELECT_BOARD,
+  LOAD_BOARDS,
+  LOAD_QUOTES,
 } from './actions.js';
 
 const INITIAL_STATE = {
@@ -43,6 +45,16 @@ export const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         selectedBoard: action.board
+      };
+      case LOAD_BOARDS:
+      return {
+        ...state,
+        boards: action.boards
+      };
+      case LOAD_QUOTES:
+      return {
+        ...state,
+        quotes: action.quotes
       };
     default:
       return state;
