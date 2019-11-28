@@ -276,7 +276,7 @@ class AddQuoteView extends BaseView {
 
 .muzzle {
   position: absolute;
-  top: 60%;
+  top: 67%;
   left: 50%;
   height: 6%;
   width: 10%;
