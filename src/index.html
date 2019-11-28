@@ -43,21 +43,17 @@
         let acl = null;
 
         function doShakyShaky() {
-      alert('initiate shaky shaky')
-      var shaking = false;
+      let shaking = false;
 
       function onreading() {
         const shakeTreashold = 3 * 9.8;
         const stillTreashold = 1;
         let magnitude = Math.hypot(acl.x, acl.y, acl.z);
         if (magnitude > shakeTreashold) {
-          alert('You did shaky shaky')
+          window.history.pushState('data', 'title', 'add');
           shaking = true;
         } else if (magnitude < stillTreashold && shaking) {
           shaking = false;
-          acl.removeEventListener('reading', onreading);
-
-          alert('You did not shaky shaky')
         }
       }
 
@@ -66,7 +62,7 @@
 
     function startShakyShaky() {
       acl = new LinearAccelerationSensor({frequency: 60});
-      acl.addEventListener('activate', this.doShakyShaky);
+      acl.addEventListener('activate', doShakyShaky);
       acl.addEventListener('error', error => {
         alert('no shaky shaky for you')
       });

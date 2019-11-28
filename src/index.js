@@ -35,6 +35,16 @@ function initRouter() {
       action: () => import(/* webpackChunkName: "add" */ './views/add-view')
     },
     {
+      path: '/add-quote',
+      component: 'add-quote-view',
+      action: () => import(/* webpackChunkName: "add" */ './views/add-quote-view')
+    },
+    {
+      path: '/add-board',
+      component: 'add-board-view',
+      action: () => import(/* webpackChunkName: "add" */ './views/add-board-view')
+    },
+    {
       path: '(.*)',
       component: 'not-found-view',
       action: () =>
