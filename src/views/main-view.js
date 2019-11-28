@@ -14,8 +14,6 @@ class MainView extends connect(store)(BaseView) {
     this.loaded = false;
 
     this.currentQuote = 0;
-    this.progressWidth = 0;
-    this.progress = setInterval(this.timerProgress(), 40);
   }
 
   static get properties() {
@@ -41,48 +39,22 @@ class MainView extends connect(store)(BaseView) {
     this.loaded = true;
   }
 
-  timerProgress() {
-    // document.querySelector(".quote-progress").width(progressWidth + "%");
-
-    console.log(document.querySelector(".quote-progress"));
-
-    if (this.progressWidth < 100) {
-      this.progressWidth += 0.1;
-    } else {
-      this.changeQuote();
-      this.progressWidth = 0;
-    }
-  }
-
-  setQuote() {
-    document
-      .querySelector(".quote")
-      .html('"' + this.quotes[this.currentQuote].quote + '"');
-    document
-      .querySelector(".author-name")
-      .html(this.quotes[this.currentQuote].author);
-    tweetQuote();
-  }
-
   getRandomQuote() {
-    this.currentQuote = Math.round(Math.random() * listQuotes.length);
+    this.currentQuote = Math.round(Math.random() * this.quotes.length);
     console.log(this.currentQuote);
     this.progressWidth = 0;
   }
 
   changeQuote() {
-    // $("blockquote").fadeToggle( "slow", "linear" );
     if (this.currentQuote < this.quotes.length - 1) {
       this.currentQuote++;
     } else {
       this.currentQuote = 0;
     }
-    this.setQuote();
   }
 
   nextSlide() {
     this.changeQuote();
-    this.progressWidth = 0;
   }
 
   prevSlide() {
@@ -91,8 +63,6 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = this.quotes.length - 1;
     }
-    this.setQuote();
-    this.progressWidth = 0;
   }
 
   render() {
