@@ -16,6 +16,7 @@ class MainView extends connect(store)(BaseView) {
 
     this.currentQuote = 0;
     this.currentDate = "";
+    this.randomColor = "";
 
     setTimeout(() => {
       this.changeQuote();
@@ -46,8 +47,9 @@ class MainView extends connect(store)(BaseView) {
 
     if (this.quotes[this.currentQuote] && this.quotes[this.currentQuote].date) {
       const date = this.quotes[this.currentQuote].date;
+      console.log(date);
+
       this.currentDate = moment(date).format("YYYY");
-      console.log(this.currentDate);
     }
   }
 
@@ -66,6 +68,10 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = 0;
     }
+    this.randomColor = `#${Math.random()
+      .toString(16)
+      .substr(-6)}`;
+
     this.setQuote();
   }
 
@@ -110,7 +116,7 @@ class MainView extends connect(store)(BaseView) {
           min-width: 400px;
           margin: auto;
           box-sizing: border-box;
-          background-color: #fff;
+          opacity: 0.85;
         }
 
         .social-share {
@@ -172,15 +178,20 @@ class MainView extends connect(store)(BaseView) {
       </style>
 
       <div class="container">
-        <div class="panel-quote">
+        <div class="panel-quote"  style="background-color: ${this.randomColor}">
           <div class="quote-progress"></div>
           <div>
             <blockquote>
               <p class="quote">
-                ${this.quotes && this.quotes[this.currentQuote] ? this.quotes[this.currentQuote].text : ''}
+                ${this.quotes && this.quotes[this.currentQuote]
+                  ? this.quotes[this.currentQuote].text
+                  : ""}
               </p>
               <p class="author">
-                ${this.quotes && this.quotes[this.currentQuote] ? this.quotes[this.currentQuote].author : ''}, ${this.currentDate}
+                ${this.quotes && this.quotes[this.currentQuote]
+                  ? this.quotes[this.currentQuote].author
+                  : ""},
+                ${this.currentDate}
                 <span class="author-name"></span>
               </p>
             </blockquote>
