@@ -11,6 +11,7 @@ class AddBoardView extends BaseView {
             name: {type: String},
             secret: {type: String},
             disableSave: {type: Boolean},
+            error: {type: Boolean},
         };
     }
 
@@ -19,6 +20,7 @@ class AddBoardView extends BaseView {
         this.name = '';
         this.secret = '';
         this.disableSave = true;
+        this.error = false;
 
         this.httpService = new HttpService();
     }
@@ -30,6 +32,8 @@ class AddBoardView extends BaseView {
         <div>
         <form class="form">
         <h2>Add Board</h2>
+        
+        <div class="${this.error ? 'error' : 'no-display'}"">Better luck next time</div>
         
         <div>
             <vaadin-text-field
@@ -69,6 +73,7 @@ class AddBoardView extends BaseView {
     }
 
     updateDisableSave() {
+        this.error = false;
         if (this.name && this.secret) {
             this.disableSave = false;
             return;
@@ -92,8 +97,12 @@ class AddBoardView extends BaseView {
             secret: this.secret,
         };
 
-        await this.httpService.createBoard(board);
-        window.history.back();
+        try {
+            await this.httpService.createBoard(board);
+            window.history.back();
+        } catch (e) {
+            this.error = true;
+        }
     }
 
     cancel() {

@@ -15,6 +15,7 @@ class AddQuoteView extends BaseView {
             censor: {type: Boolean},
             secret: {type: String},
             disableSave: {type: Boolean},
+            error: {type: Boolean},
         };
     }
 
@@ -25,6 +26,7 @@ class AddQuoteView extends BaseView {
         this.censor = true;
         this.secret = '';
         this.disableSave = true;
+        this.error = false;
 
         this.httpService = new HttpService();
     }
@@ -36,6 +38,8 @@ class AddQuoteView extends BaseView {
         <div>
         <form class="form">
         <h2>Add Quote</h2>
+        
+        <div class="${this.error ? 'error' : 'no-display'}"">Better luck next time</div>
         
         <div>
             <vaadin-text-area
@@ -94,6 +98,7 @@ class AddQuoteView extends BaseView {
     }
 
     updateDisableSave() {
+        this.error = false;
         if (this.text && this.secret && this.secret) {
             this.disableSave = false;
             return;
@@ -123,16 +128,22 @@ class AddQuoteView extends BaseView {
 
     async createQuote() {
         const quote = {
-            quote: {
                 text: this.text,
                 author: this.author,
                 censor: this.censor,
-            },
             secret: this.secret,
         };
 
-        await this.httpService.createNewQuote(quote);
-        window.history.back();
+        try {
+            const res = await this.httpService.createNewQuote(quote);
+            if (res.data.status === 404) {
+                this.error = true;
+                return;
+            }
+            window.history.back();
+        } catch (e) {
+            this.error = true;
+        }
     }
 
     cancel() {
