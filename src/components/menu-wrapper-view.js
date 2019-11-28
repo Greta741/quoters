@@ -204,12 +204,12 @@ class MenuWrapperView extends connect(store)(BaseView) {
     </label>
     <div id="sidebarMenu">
       <ul class="sidebarMenuInner">
-        <li><a href="/quotes">All Quotes</a></li>
+        <li><a href="/quotes" @click="${this.closeMenu}">All Quotes</a></li>
         <li class="menu-header-no-click"><a>Boards:</a></li>
         ${
             this.boards.map(
                 board => html`
-                  <li><a class="boards-menu-items" href="/quotes/${board._id}">${board.name}</a></li>
+                  <li><a class="boards-menu-items" href="/quotes/${board._id}" @click="${this.closeMenu}">${board.name}</a></li>
                 `
             )
         }
@@ -239,6 +239,13 @@ class MenuWrapperView extends connect(store)(BaseView) {
         if (this.clicksCount >= clicksRequired) {
             store.dispatch(disableCensor());
             alert('NSFW activated');
+        }
+    }
+
+    closeMenu() {
+        const menuCheckbox = document.getElementById('openSidebarMenu');
+        if (menuCheckbox) {
+            menuCheckbox.checked = false;
         }
     }
 }
