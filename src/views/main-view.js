@@ -1,4 +1,4 @@
-import { html, requestUpdate } from "lit-html";
+import { html } from "lit-html";
 import { getQuotesSelector } from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
@@ -14,6 +14,14 @@ class MainView extends connect(store)(BaseView) {
     this.loaded = false;
 
     this.currentQuote = 0;
+    this.currentDate = new Date().getFullYear();
+    this.randomColor = `#${Math.random()
+      .toString(16)
+      .substr(-6)}`;
+
+    setTimeout(() => {
+      this.changeQuote();
+    }, 5000);
   }
 
   static get properties() {
@@ -54,13 +62,13 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = 0;
     }
+
     this.setQuote();
   }
 
   prevSlide() {
     if (this.currentQuote > 0) {
       this.currentQuote--;
-      console.log(this.currentQuote);
     } else {
       this.currentQuote = this.quotes.length - 1;
     }
@@ -93,13 +101,17 @@ class MainView extends connect(store)(BaseView) {
 
         .panel-quote {
           position: absolute;
+          top: 0;
+          width: 100%;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          min-width: 400px;
+          min-width: 60%;
           margin: auto;
           box-sizing: border-box;
-          background-color: #fff;
+          opacity: 0.85;
+          height: 100%;
+          margin: 0;
         }
 
         .social-share {
@@ -118,12 +130,17 @@ class MainView extends connect(store)(BaseView) {
 
         blockquote {
           padding: 30px;
-          font-size: 1.4em;
+          font-size: 3em;
         }
 
         .quote {
-          font-family: "Crimson Text", serif;
-          font-style: italic;
+          font-family: "Courgette", cursive;
+        }
+
+        .quote::before {
+            content: '"';
+            font-family: "Arizonia", cursive;
+            font-size: 10rem;
         }
 
         .author {
@@ -148,6 +165,11 @@ class MainView extends connect(store)(BaseView) {
           margin: auto;
         }
 
+        .fa {
+          font-size: 3.5rem;
+          color: #000;
+        }
+
         /* Media Queries */
         @media screen and (max-width: 460px) {
           .panel-quote {
@@ -161,13 +183,20 @@ class MainView extends connect(store)(BaseView) {
       </style>
 
       <div class="container">
-        <div class="panel-quote">
+        <div class="panel-quote" style="background-color: ${this.randomColor}">
           <div class="quote-progress"></div>
           <div>
             <blockquote>
-              <p class="quote">${this.quotes[this.currentQuote].text}</p>
+              <p class="quote">
+                ${this.quotes && this.quotes[this.currentQuote]
+                  ? this.quotes[this.currentQuote].text
+                  : ""}
+              </p>
               <p class="author">
-                ${this.quotes[this.currentQuote].date}
+                ${this.quotes && this.quotes[this.currentQuote]
+                  ? this.quotes[this.currentQuote].author
+                  : ""},
+                ${this.currentDate}
                 <span class="author-name"></span>
               </p>
             </blockquote>

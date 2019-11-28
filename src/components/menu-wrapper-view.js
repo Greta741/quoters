@@ -2,8 +2,19 @@ import { html } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../redux/store.js';
 import { BaseView } from '../views/base-view.js';
+import {disableCensor} from "../redux/actions";
+
+const clicksRequired = 7;
+const clicksResetTime = 3000;
 
 class MenuWrapperView extends connect(store)(BaseView) {
+    constructor() {
+        super();
+
+        this.clicksCount = 0;
+        this.timerStarted = false;
+    }
+
     static get properties() {
         return {
             boards: { type: Array }
@@ -12,6 +23,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
 
     stateChanged(state) {
         this.boards = state.boards;
+        this.disableCensor = state.disableCensor;
     }
 
     render() {
@@ -89,6 +101,9 @@ class MenuWrapperView extends connect(store)(BaseView) {
         font-weight: bold;
         cursor: pointer;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .sidebarMenuInner li:hover {
+        background: rgba(242, 240, 237, 0.2);
       }
       .sidebarMenuInner li span {
         display: block;
@@ -180,7 +195,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
       }
     </style>
 
-    <div class="header"><h1>Quoters</h1></div>
+    <div class="header"><h1 @click="${this.clickName}">Quoters</h1></div>
     <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" />
     <label for="openSidebarMenu" class="sidebarIconToggle">
       <div class="spinner diagonal part-1"></div>
@@ -189,29 +204,49 @@ class MenuWrapperView extends connect(store)(BaseView) {
     </label>
     <div id="sidebarMenu">
       <ul class="sidebarMenuInner">
-        <li><a href="/">Current (Quotes)</a></li>
-        <li><a href="/quotes">Quotes</a></li>
+        <li><a href="/quotes" @click="${this.closeMenu}">All Quotes</a></li>
         <li class="menu-header-no-click"><a>Boards:</a></li>
         ${
             this.boards.map(
                 board => html`
-                  <li><a class="boards-menu-items" href="/quotes/${board._id}">${board.name}</a></li>
+                  <li><a class="boards-menu-items" href="/quotes/${board._id}" @click="${this.closeMenu}">${board.name}</a></li>
                 `
             )
         }
       </ul>
     </div>
-    <div id="center" class="main center">
-      <div class="mainInner">
-        <div></div>
-      </div>
-    </div>
-
+    
     <div style="display: none">
       <a id="addQuote" href="/add-quote"></a>
       <a id="addBoard" href="/add-board"></a>
     </div>
     `;
+    }
+
+    clickName() {
+        if (this.disableCensor) {
+            return;
+        }
+
+        this.clicksCount++;
+        if (!this.timerStarted) {
+            this.timerStarted = true;
+            setTimeout(() => {
+                this.clicksCount = 0;
+                this.timerStarted = false;
+            }, clicksResetTime)
+        }
+        if (this.clicksCount >= clicksRequired) {
+            store.dispatch(disableCensor());
+            alert('NSFW activated');
+        }
+    }
+
+    closeMenu() {
+        const menuCheckbox = document.getElementById('openSidebarMenu');
+        if (menuCheckbox) {
+            menuCheckbox.checked = false;
+        }
     }
 }
 

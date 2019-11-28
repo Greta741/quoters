@@ -3,7 +3,7 @@ import { loadBoards, loadQuotes } from "./actions";
 
 const axios = require("axios");
 
-const url = "http://localhost:443/api";
+const url = "https://quote-board.site/api";
 
 export class HttpService {
   async getBoards() {
