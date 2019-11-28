@@ -5,6 +5,7 @@ import '@vaadin/vaadin-text-field/vaadin-text-area'
 import '@vaadin/vaadin-text-field/vaadin-password-field'
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
+import {HttpService} from "../redux/service";
 
 class AddQuoteView extends BaseView {
     static get properties() {
@@ -22,6 +23,8 @@ class AddQuoteView extends BaseView {
         this.author = '';
         this.censor = true;
         this.secret = '';
+
+        this.httpService = new HttpService();
     }
 
 
@@ -51,7 +54,7 @@ class AddQuoteView extends BaseView {
          </div>
          
          <div>
-             <label>Quote censor</label>
+             <label>NSFW</label>
              <vaadin-checkbox
                    ?checked="${this.censor}"
                    @change="${this.updateCensor}">
@@ -95,12 +98,20 @@ class AddQuoteView extends BaseView {
         this.secret = e.target.value
     }
 
-    createQuote() {
-        console.log(this.text, this.author, this.censor, this.secret)
+    async createQuote() {
+        const quote = {
+            text: this.text,
+            author: this.author,
+            censor: this.censor,
+            secret: this.secret,
+        };
+
+        await this.httpService.createNewQuote(quote);
+        window.history.back();
     }
 
     cancel() {
-        console.log('cancel')
+        window.history.back();
     }
 }
 
