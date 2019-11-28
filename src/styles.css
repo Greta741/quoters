@@ -134,3 +134,12 @@ vaadin-text-area, vaadin-text-field, vaadin-password-field {
 .form-buttons {
     text-align: right;
 }
+
+.no-display {
+  display: none;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}

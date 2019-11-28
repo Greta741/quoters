@@ -9,7 +9,9 @@ class AddBoardView extends BaseView {
     static get properties() {
         return {
             name: {type: String},
-            secret: {type: String}
+            secret: {type: String},
+            disableSave: {type: Boolean},
+            error: {type: Boolean},
         };
     }
 
@@ -17,6 +19,8 @@ class AddBoardView extends BaseView {
         super();
         this.name = '';
         this.secret = '';
+        this.disableSave = true;
+        this.error = false;
 
         this.httpService = new HttpService();
     }
@@ -28,6 +32,8 @@ class AddBoardView extends BaseView {
         <div>
         <form class="form">
         <h2>Add Board</h2>
+        
+        <div class="${this.error ? 'error' : 'no-display'}"">Better luck next time</div>
         
         <div>
             <vaadin-text-field
@@ -46,7 +52,7 @@ class AddBoardView extends BaseView {
                    placeholder="Board secret"
                    value="${this.secret}"
                    required="true"
-                    errorMessage="required"
+                   errorMessage="required"
                    @change="${this.updateSecret}">
              </vaadin-password-field>
        </div>
@@ -55,7 +61,10 @@ class AddBoardView extends BaseView {
           <vaadin-button @click="${this.cancel}">
             Cancel
           </vaadin-button>
-           <vaadin-button theme="primary" @click="${this.createBoard}">
+           <vaadin-button
+           theme="primary" 
+           ?disabled="${this.disableSave}"
+           @click="${this.createBoard}">
             Create
           </vaadin-button>
       </div>
@@ -63,12 +72,23 @@ class AddBoardView extends BaseView {
     </div>`;
     }
 
+    updateDisableSave() {
+        this.error = false;
+        if (this.name && this.secret) {
+            this.disableSave = false;
+            return;
+        }
+        this.disableSave = true;
+    }
+
     updateName(e) {
-        this.name = e.target.value
+        this.name = e.target.value;
+        this.updateDisableSave();
     }
 
     updateSecret(e) {
-        this.secret = e.target.value
+        this.secret = e.target.value;
+        this.updateDisableSave();
     }
 
     async createBoard() {
@@ -77,8 +97,12 @@ class AddBoardView extends BaseView {
             secret: this.secret,
         };
 
-        await this.httpService.createBoard(board);
-        window.history.back();
+        try {
+            await this.httpService.createBoard(board);
+            window.history.back();
+        } catch (e) {
+            this.error = true;
+        }
     }
 
     cancel() {

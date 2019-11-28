@@ -5,14 +5,18 @@ import { BaseView } from '../views/base-view.js';
 
 class MenuWrapperView extends connect(store)(BaseView) {
     static get properties() {
-        return {};
+        return {
+            boards: { type: Array }
+        };
+    }
+
+    stateChanged(state) {
+        this.boards = state.boards;
     }
 
     render() {
         return html`
     <style>
-      @import url('https://fonts.googleapis.com/css?family=Handlee');
-      @import url('https://fonts.googleapis.com/css?family=Montserrat');
       html,
       body {
         overflow-x: hidden;
@@ -71,7 +75,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
         transform: translateX(-250px);
         transition: transform 250ms ease-in-out;
         background: linear-gradient(180deg, #2D3142 0%, #C52184 100%);
-        font-family: 'Handlee', sans-serif;
+        font-family: 'Montserrat', sans-serif;
       }
       .sidebarMenuInner {
         margin: 0;
@@ -98,7 +102,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
         cursor: pointer;
         text-decoration: none;
         display: block;
-        padding: 16px;
+        padding: 1rem;
       }
       input[type="checkbox"]:checked ~ #sidebarMenu {
         transform: translateX(0);
@@ -167,6 +171,13 @@ class MenuWrapperView extends connect(store)(BaseView) {
         transform: rotate(-135deg);
         margin-top: -9px;
       }
+      .menu-header-no-click {
+        pointer-events: none;
+        cursor: default !important;
+      }
+      .boards-menu-items {
+        padding-left: 2rem !important;
+      }
     </style>
 
     <div class="header"><h1>Quoters</h1></div>
@@ -180,7 +191,14 @@ class MenuWrapperView extends connect(store)(BaseView) {
       <ul class="sidebarMenuInner">
         <li><a href="/">Current (Quotes)</a></li>
         <li><a href="/quotes">Quotes</a></li>
-        <li><a href="/boards">Boards</a></li>
+        <li class="menu-header-no-click"><a>Boards:</a></li>
+        ${
+            this.boards.map(
+                board => html`
+                  <li><a class="boards-menu-items" href="/quotes/${board._id}">${board.name}</a></li>
+                `
+            )
+        }
       </ul>
     </div>
     <div id="center" class="main center">

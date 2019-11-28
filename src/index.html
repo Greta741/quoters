@@ -34,6 +34,11 @@
   </head>
 
   <body>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Handlee');
+      @import url('https://fonts.googleapis.com/css?family=Montserrat');
+      @import url('https://fonts.googleapis.com/css?family=Courgette');
+    </style>
     <menu-wrapper-view></menu-wrapper-view>
     <main></main>
     <script src="./vendor/webcomponents-loader.js"></script>
@@ -50,7 +55,6 @@
           let magnitude = Math.hypot(acl.x, acl.y, acl.z);
           if (magnitude > shakeTreashold) {
             const currentPathName = window.location.pathname;
-            alert(currentPathName);
             if (currentPathName === "/" || currentPathName.includes("quotes")) {
               document.getElementById("addQuote").click();
             }
