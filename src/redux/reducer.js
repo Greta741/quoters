@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
 import {
-  SELECT_BOARD,
+  LOAD_BOARDS,
+  LOAD_QUOTES,
 } from './actions.js';
 
 const INITIAL_STATE = {
@@ -39,26 +40,20 @@ const INITIAL_STATE = {
 
 export const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SELECT_BOARD:
+      case LOAD_BOARDS:
       return {
         ...state,
-        selectedBoard: action.board
+        boards: action.boards
+      };
+      case LOAD_QUOTES:
+      return {
+        ...state,
+        quotes: action.quotes
       };
     default:
       return state;
   }
 };
 
-const getQuotesSelector = state => state.quotes;
+export const getQuotesSelector = state => state.quotes;
 const getSelectedBoardSelector = state => state.selectedBoard;
-
-export const getVisibleQuotes = createSelector(
-  getQuotesSelector,
-  getSelectedBoardSelector,
-  (quotes, selectedBoard) => {
-    if (!selectedBoard) {
-      return quotes
-    }
-    return quotes.filter(quote => quote.board === selectedBoard)
-  }
-);
