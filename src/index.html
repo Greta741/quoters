@@ -19,7 +19,7 @@
 
     <script>
       if (!window.customElements) {
-        document.write('<!--');
+        document.write("<!--");
       }
     </script>
     <script src="./vendor/custom-elements-es5-adapter.js"></script>
@@ -28,8 +28,9 @@
 
   <body>
     <style>
-      @import url('https://fonts.googleapis.com/css?family=Varela+Round');
-      html, body {
+      @import url("https://fonts.googleapis.com/css?family=Varela+Round");
+      html,
+      body {
         overflow-x: hidden;
         height: 100%;
       }
@@ -37,7 +38,7 @@
         background: #fff;
         padding: 0;
         margin: 0;
-        font-family: 'Varela Round', sans-serif;
+        font-family: "Varela Round", sans-serif;
       }
       .header {
         display: block;
@@ -45,9 +46,9 @@
         width: 100%;
         max-width: 100%;
         box-shadow: none;
-        background-color: #0A81D1;
+        background-color: #0a81d1;
         position: fixed;
-        height: 60px!important;
+        height: 60px !important;
         overflow: hidden;
         z-index: 7000;
       }
@@ -62,14 +63,14 @@
         /*height: 100%;*/
         margin-top: 60px;
       }
-      .mainInner{
+      .mainInner {
         display: table;
         /*height: 100%;*/
         width: 100%;
         text-align: center;
       }
-      .mainInner div{
-        display:table-cell;
+      .mainInner div {
+        display: table-cell;
         vertical-align: middle;
         font-size: 3em;
         font-weight: bold;
@@ -84,28 +85,28 @@
         margin-top: 60px;
         transform: translateX(-250px);
         transition: transform 250ms ease-in-out;
-        background: linear-gradient(180deg, #0A81D1 0%, #F08CAE 100%);
+        background: linear-gradient(180deg, #0a81d1 0%, #f08cae 100%);
       }
-      .sidebarMenuInner{
-        margin:0;
-        padding:0;
-        border-top: 1px solid rgba(255, 255, 255, 0.10);
+      .sidebarMenuInner {
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
-      .sidebarMenuInner li{
+      .sidebarMenuInner li {
         list-style: none;
         color: #fff;
         text-transform: uppercase;
         font-weight: bold;
         padding: 20px;
         cursor: pointer;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
-      .sidebarMenuInner li span{
+      .sidebarMenuInner li span {
         display: block;
         font-size: 14px;
-        color: rgba(255, 255, 255, 0.50);
+        color: rgba(255, 255, 255, 0.5);
       }
-      .sidebarMenuInner li a{
+      .sidebarMenuInner li a {
         color: #fff;
         text-transform: uppercase;
         font-weight: bold;
@@ -116,7 +117,7 @@
         transform: translateX(0);
       }
 
-      input[type=checkbox] {
+      input[type="checkbox"] {
         transition: all 0.3s;
         box-sizing: border-box;
         display: none;
@@ -162,29 +163,27 @@
         float: left;
         margin-top: 3px;
       }
-      input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+      input[type="checkbox"]:checked ~ .sidebarIconToggle > .horizontal {
         transition: all 0.3s;
         box-sizing: border-box;
         opacity: 0;
       }
-      input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+      input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
         transition: all 0.3s;
         box-sizing: border-box;
         transform: rotate(135deg);
         margin-top: 8px;
       }
-      input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+      input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
         transition: all 0.3s;
         box-sizing: border-box;
         transform: rotate(-135deg);
         margin-top: -9px;
       }
-
     </style>
 
-
     <div class="header"><h1>Quoters</h1></div>
-    <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+    <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" />
     <label for="openSidebarMenu" class="sidebarIconToggle">
       <div class="spinner diagonal part-1"></div>
       <div class="spinner horizontal"></div>
@@ -197,7 +196,7 @@
         <li><a href="/boards">Boards</a></li>
       </ul>
     </div>
-    <div id='center' class="main center">
+    <div id="center" class="main center">
       <div class="mainInner">
         <div></div>
       </div>
@@ -211,48 +210,45 @@
     <main></main>
     <script src="./vendor/webcomponents-loader.js"></script>
 
-
     <script>
-        let acl = null;
+      let acl = null;
 
-        function doShakyShaky() {
-      let shaking = false;
+      function doShakyShaky() {
+        let shaking = false;
 
-      function onreading() {
-        const shakeTreashold = 3 * 9.8;
-        const stillTreashold = 1;
-        let magnitude = Math.hypot(acl.x, acl.y, acl.z);
-        if (magnitude > shakeTreashold) {
-          const currentPathName = window.location.pathname;
-          alert(currentPathName);
-          if (currentPathName === '/' || currentPathName.includes('quotes')) {
-            document.getElementById('addQuote').click()
+        function onreading() {
+          const shakeTreashold = 3 * 9.8;
+          const stillTreashold = 1;
+          let magnitude = Math.hypot(acl.x, acl.y, acl.z);
+          if (magnitude > shakeTreashold) {
+            const currentPathName = window.location.pathname;
+            alert(currentPathName);
+            if (currentPathName === "/" || currentPathName.includes("quotes")) {
+              document.getElementById("addQuote").click();
+            }
+
+            if (currentPathName.includes("boards")) {
+              document.getElementById("addBoard").click();
+            }
+            shaking = true;
+          } else if (magnitude < stillTreashold && shaking) {
+            shaking = false;
           }
-
-          if (currentPathName.includes('boards')) {
-            document.getElementById('addBoard').click()
-          }
-          shaking = true;
-        } else if (magnitude < stillTreashold && shaking) {
-          shaking = false;
         }
+
+        acl.addEventListener("reading", onreading);
       }
 
-      acl.addEventListener('reading', onreading);
-    }
+      function startShakyShaky() {
+        acl = new LinearAccelerationSensor({ frequency: 60 });
+        acl.addEventListener("activate", doShakyShaky);
+        acl.addEventListener("error", error => {
+          // alert('no shaky shaky for you')
+        });
+        acl.start();
+      }
 
-    function startShakyShaky() {
-      acl = new LinearAccelerationSensor({frequency: 60});
-      acl.addEventListener('activate', doShakyShaky);
-      acl.addEventListener('error', error => {
-        // alert('no shaky shaky for you')
-      });
-      acl.start();
-    }
-
-    window.addEventListener('load', startShakyShaky)
-
-
-      </script>
+      window.addEventListener("load", startShakyShaky);
+    </script>
   </body>
 </html>
