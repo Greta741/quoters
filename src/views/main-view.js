@@ -7,15 +7,15 @@ import "../components/my-quote.js";
 import { HttpService } from "../redux/service";
 
 class MainView extends connect(store)(BaseView) {
-  // currentQuote = 0;
-  // progressWidth = 0;
-  // progress = setInterval(this.timerProgress(), 40);
-
   constructor() {
     super();
 
     this.httpService = new HttpService();
     this.loaded = false;
+
+    this.currentQuote = 0;
+    this.progressWidth = 0;
+    this.progress = setInterval(this.timerProgress(), 40);
   }
 
   static get properties() {
@@ -46,54 +46,53 @@ class MainView extends connect(store)(BaseView) {
 
     console.log(document.querySelector(".quote-progress"));
 
-    if (progressWidth < 100) {
-      progressWidth += 0.1;
+    if (this.progressWidth < 100) {
+      this.progressWidth += 0.1;
     } else {
-      changeQuote();
-      progressWidth = 0;
+      this.changeQuote();
+      this.progressWidth = 0;
     }
   }
 
   setQuote() {
     document
       .querySelector(".quote")
-      .html('"' + listQuotes[currentQuote].quote + '"');
+      .html('"' + this.quotes[this.currentQuote].quote + '"');
     document
       .querySelector(".author-name")
-      .html(listQuotes[currentQuote].author);
+      .html(this.quotes[this.currentQuote].author);
     tweetQuote();
   }
 
   getRandomQuote() {
-    currentQuote = Math.round(Math.random() * listQuotes.length);
-    console.log(currentQuote);
-    progressWidth = 0;
+    this.currentQuote = Math.round(Math.random() * listQuotes.length);
+    console.log(this.currentQuote);
+    this.progressWidth = 0;
   }
 
   changeQuote() {
     // $("blockquote").fadeToggle( "slow", "linear" );
-    if (currentQuote < listQuotes.length - 1) {
-      currentQuote++;
+    if (this.currentQuote < this.quotes.length - 1) {
+      this.currentQuote++;
     } else {
-      currentQuote = 0;
+      this.currentQuote = 0;
     }
-    setQuote();
+    this.setQuote();
   }
 
   nextSlide() {
-    console.log(this.quotes);
-    changeQuote();
-    progressWidth = 0;
+    this.changeQuote();
+    this.progressWidth = 0;
   }
 
   prevSlide() {
-    if (currentQuote > 0) {
-      currentQuote--;
+    if (this.currentQuote > 0) {
+      this.currentQuote--;
     } else {
-      currentQuote = listQuotes.length - 1;
+      this.currentQuote = this.quotes.length - 1;
     }
-    setQuote();
-    progressWidth = 0;
+    this.setQuote();
+    this.progressWidth = 0;
   }
 
   render() {
