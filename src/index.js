@@ -20,7 +20,7 @@ function initRouter() {
       action: () => import(/* webpackChunkName: "quotes" */ './views/main-view')
     },
     {
-      path: '/quotes/:boards',
+      path: '/quotes/:board',
       component: 'main-view',
       action: () => import(/* webpackChunkName: "quotes" */ './views/main-view')
     },

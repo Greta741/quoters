@@ -29,6 +29,7 @@ class MainView extends connect(store)(BaseView) {
             return;
         }
         const board = this.location.params.board;
+        console.log(board)
         if (board) {
             this.httpService.getQuotes(board)
         } else {
