@@ -4,42 +4,44 @@ import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
 import { BaseView } from "./base-view.js";
 import "../components/my-quote.js";
-import {HttpService} from "../redux/service";
+import { HttpService } from "../redux/service";
 
 class MainView extends connect(store)(BaseView) {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.httpService = new HttpService();
-        this.loaded = false;
-    }
+    this.httpService = new HttpService();
+    this.loaded = false;
+  }
 
-    static get properties() {
-        return {
-            quotes: {type: Array}
-        };
-    }
+  static get properties() {
+    return {
+      quotes: { type: Array }
+    };
+  }
 
-    stateChanged(state) {
-        this.quotes = getQuotesSelector(state);
-    }
+  stateChanged(state) {
+    this.quotes = getQuotesSelector(state);
 
-    loadQuotes() {
-        if (this.loaded) {
-            return;
-        }
-        const board = this.location.params.board;
-        console.log(board)
-        if (board) {
-            this.httpService.getQuotes(board)
-        } else {
-            this.httpService.getQuotes(null)
-        }
-        this.loaded = true;
+    console.log(this.quotes);
+  }
+
+  loadQuotes() {
+    if (this.loaded) {
+      return;
     }
+    const board = this.location.params.board;
+    console.log(board);
+    if (board) {
+      this.httpService.getQuotes(board);
+    } else {
+      this.httpService.getQuotes(null);
+    }
+    this.loaded = true;
+  }
 
   render() {
-      this.loadQuotes();
+    this.loadQuotes();
 
     return html`
       <style>
@@ -60,7 +62,7 @@ class MainView extends connect(store)(BaseView) {
 
         .panel-quote {
           position: absolute;
-          top: 80%;
+          top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
           min-width: 400px;
@@ -136,7 +138,7 @@ class MainView extends connect(store)(BaseView) {
             ${this.quotes.map(
               quote => html`
                 <blockquote>
-                  <p class="quote">${quote.quote}</p>
+                  <p class="quote">${quote.text}</p>
                   <p class="author">
                     - ${quote.author}<span class="author-name"></span>
                   </p>
