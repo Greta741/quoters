@@ -13,7 +13,8 @@ class AddQuoteView extends BaseView {
             text: {type: String},
             author: {type: String},
             censor: {type: Boolean},
-            secret: {type: String}
+            secret: {type: String},
+            disableSave: {type: Boolean},
         };
     }
 
@@ -23,6 +24,7 @@ class AddQuoteView extends BaseView {
         this.author = '';
         this.censor = true;
         this.secret = '';
+        this.disableSave = true;
 
         this.httpService = new HttpService();
     }
@@ -39,6 +41,8 @@ class AddQuoteView extends BaseView {
             <vaadin-text-area
                 label="Quote text"
                 placeholder="Quote text"
+                required="true"
+                errorMessage="required"
                 value="${this.text}"
                 @change="${this.updateText}">
             </vaadin-text-area>
@@ -46,8 +50,10 @@ class AddQuoteView extends BaseView {
             
          <div>
              <vaadin-text-field
-                    label="Quote author"
+                   label="Quote author"
                    placeholder="Quote author"
+                   required="true"
+                   errorMessage="required"
                    value="${this.author}"
                    @change="${this.updateAuthor}">
              </vaadin-text-field>
@@ -65,6 +71,8 @@ class AddQuoteView extends BaseView {
              <vaadin-password-field
                     label="Board secret"
                    placeholder="Board secret"
+                   required="true"
+                   errorMessage="required"
                    value="${this.secret}"
                    @change="${this.updateSecret}">
              </vaadin-password-field>
@@ -74,7 +82,10 @@ class AddQuoteView extends BaseView {
           <vaadin-button @click="${this.cancel}">
             Cancel
           </vaadin-button>
-           <vaadin-button theme="primary" @click="${this.createQuote}">
+           <vaadin-button
+                theme="primary"
+                ?disabled="${this.disableSave}"
+                @click="${this.createQuote}">
             Create
           </vaadin-button>
       </div>
@@ -82,12 +93,23 @@ class AddQuoteView extends BaseView {
     </div>`;
     }
 
+    updateDisableSave() {
+        if (this.text && this.secret && this.secret) {
+            this.disableSave = false;
+            return;
+        }
+        this.disableSave = true;
+    }
+
+
     updateText(e) {
-        this.text = e.target.value
+        this.text = e.target.value;
+        this.updateDisableSave();
     }
 
     updateAuthor(e) {
-        this.author = e.target.value
+        this.author = e.target.value;
+        this.updateDisableSave();
     }
 
     updateCensor(e) {
@@ -95,7 +117,8 @@ class AddQuoteView extends BaseView {
     }
 
     updateSecret(e) {
-        this.secret = e.target.value
+        this.secret = e.target.value;
+        this.updateDisableSave();
     }
 
     async createQuote() {
