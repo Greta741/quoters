@@ -1,5 +1,6 @@
 import './styles.css';
 import './views/main-view.js';
+import "./components/menu-wrapper-view.js";
 import { Router } from '@vaadin/router';
 
 window.addEventListener('load', () => {
