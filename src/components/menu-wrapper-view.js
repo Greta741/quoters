@@ -17,8 +17,6 @@ class MenuWrapperView extends connect(store)(BaseView) {
     render() {
         return html`
     <style>
-      @import url('https://fonts.googleapis.com/css?family=Handlee');
-      @import url('https://fonts.googleapis.com/css?family=Montserrat');
       html,
       body {
         overflow-x: hidden;
@@ -178,7 +176,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
         cursor: default !important;
       }
       .boards-menu-items {
-        padding-left: 2rem;
+        padding-left: 2rem !important;
       }
     </style>
 
