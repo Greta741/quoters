@@ -20,14 +20,14 @@ function initRouter() {
       action: () => import(/* webpackChunkName: "quotes" */ './views/main-view')
     },
     {
-      path: '/quotes/:room',
+      path: '/quotes/:boards',
       component: 'main-view',
       action: () => import(/* webpackChunkName: "quotes" */ './views/main-view')
     },
     {
-      path: '/rooms',
-      component: 'rooms-view',
-      action: () => import(/* webpackChunkName: "quotes" */ './views/rooms-view')
+      path: '/boards',
+      component: 'boards-view',
+      action: () => import(/* webpackChunkName: "quotes" */ './views/boards-view')
     },
     {
       path: '/add',
