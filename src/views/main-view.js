@@ -5,7 +5,6 @@ import { store } from "../redux/store.js";
 import { BaseView } from "./base-view.js";
 import "../components/my-quote.js";
 import { HttpService } from "../redux/service";
-import moment from "moment";
 
 class MainView extends connect(store)(BaseView) {
   constructor() {
@@ -15,7 +14,7 @@ class MainView extends connect(store)(BaseView) {
     this.loaded = false;
 
     this.currentQuote = 0;
-    this.currentDate = "";
+    this.currentDate = new Date().getFullYear();
     this.randomColor = "";
 
     setTimeout(() => {
@@ -44,13 +43,6 @@ class MainView extends connect(store)(BaseView) {
       this.httpService.getQuotes(null);
     }
     this.loaded = true;
-
-    if (this.quotes[this.currentQuote] && this.quotes[this.currentQuote].date) {
-      const date = this.quotes[this.currentQuote].date;
-      console.log(date);
-
-      this.currentDate = moment(date).format("YYYY");
-    }
   }
 
   getRandomQuote() {
@@ -178,7 +170,7 @@ class MainView extends connect(store)(BaseView) {
       </style>
 
       <div class="container">
-        <div class="panel-quote"  style="background-color: ${this.randomColor}">
+        <div class="panel-quote" style="background-color: ${this.randomColor}">
           <div class="quote-progress"></div>
           <div>
             <blockquote>
