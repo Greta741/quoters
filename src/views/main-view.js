@@ -1,4 +1,4 @@
-import { html } from "lit-html";
+import { html, requestUpdate } from "lit-html";
 import { getQuotesSelector } from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
@@ -41,8 +41,11 @@ class MainView extends connect(store)(BaseView) {
 
   getRandomQuote() {
     this.currentQuote = Math.round(Math.random() * this.quotes.length);
-    console.log(this.currentQuote);
-    this.progressWidth = 0;
+    this.setQuote();
+  }
+
+  setQuote() {
+    this.requestUpdate();
   }
 
   changeQuote() {
@@ -51,18 +54,21 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = 0;
     }
-  }
-
-  nextSlide() {
-    this.changeQuote();
+    this.setQuote();
   }
 
   prevSlide() {
     if (this.currentQuote > 0) {
       this.currentQuote--;
+      console.log(this.currentQuote);
     } else {
       this.currentQuote = this.quotes.length - 1;
     }
+    this.setQuote();
+  }
+
+  nextSlide() {
+    this.changeQuote();
   }
 
   render() {
@@ -158,27 +164,25 @@ class MainView extends connect(store)(BaseView) {
         <div class="panel-quote">
           <div class="quote-progress"></div>
           <div>
-            ${this.quotes.map(
-              quote => html`
-                <blockquote>
-                  <p class="quote">${quote.text}</p>
-                  <p class="author">
-                    - ${quote.author}<span class="author-name"></span>
-                  </p>
-                </blockquote>
-                <div class="quote-nav">
-                  <button @click="${this.prevSlide}" class="previous">
-                    <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-                  </button>
-                  <button @click="${this.getRandomQuote}" class="random">
-                    <i class="fa fa-random" aria-hidden="true"></i>
-                  </button>
-                  <button @click="${this.nextSlide}" class="next">
-                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                  </button>
-                </div>
-              `
-            )}
+            <blockquote>
+              <p class="quote">${this.quotes[this.currentQuote].text}</p>
+              <p class="author">
+                ${this.quotes[this.currentQuote].author},
+                ${this.quotes[this.currentQuote].date}
+                <span class="author-name"></span>
+              </p>
+            </blockquote>
+            <div class="quote-nav">
+              <button @click="${this.prevSlide}" class="previous">
+                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+              </button>
+              <button @click="${this.getRandomQuote}" class="random">
+                <i class="fa fa-random" aria-hidden="true"></i>
+              </button>
+              <button @click="${this.nextSlide}" class="next">
+                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
