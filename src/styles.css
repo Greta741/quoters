@@ -119,3 +119,18 @@ ul {
     height: auto;
   }
 }
+
+.form {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 20rem;
+}
+
+vaadin-text-area, vaadin-text-field, vaadin-password-field {
+    width: 100%;
+}
+
+.form-buttons {
+    text-align: right;
+}
