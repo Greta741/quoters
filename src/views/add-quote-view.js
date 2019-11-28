@@ -35,6 +35,269 @@ class AddQuoteView extends BaseView {
     render() {
         return html`
         <link rel="stylesheet" type="text/css" href="../styles.css" media="all" />
+        
+<style>
+.cat {
+  position: relative;
+  height: 34px;
+  width: 38.42px;
+  margin-top: 1rem;
+}
+
+.ear {
+  position: absolute;
+  top: -30%;
+  height: 60%;
+  width: 25%;
+  background: #fff;
+}
+.ear::before, .ear::after {
+  content: '';
+  position: absolute;
+  bottom: 24%;
+  height: 10%;
+  width: 5%;
+  border-radius: 50%;
+  background: #161616;
+}
+.ear::after {
+  -webkit-transform-origin: 50% 100%;
+          transform-origin: 50% 100%;
+}
+
+.ear--left {
+  left: -7%;
+  border-radius: 70% 30% 0% 0% / 100% 100% 0% 0%;
+  -webkit-transform: rotate(-24deg);
+          transform: rotate(-24deg);
+}
+.ear--left::before, .ear--left::after {
+  right: 10%;
+}
+.ear--left::after {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.ear--right {
+  right: -7%;
+  border-radius: 30% 70% 0% 0% / 100% 100% 0% 0%;
+  -webkit-transform: rotate(24deg);
+          transform: rotate(24deg);
+}
+.ear--right::before, .ear--right::after {
+  left: 10%;
+}
+.ear--right::after {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.face {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #161616;
+  border-radius: 50%;
+}
+
+.eye {
+  position: absolute;
+  top: 35%;
+  height: 30%;
+  width: 31%;
+  background: #fff;
+  /*border-radius: 34% 78% 66% 65% / 57% 95% 26% 73%;*/
+}
+.eye::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  border-radius: 0 0 50% 50% / 0 0 3% 15%;
+  background: #161616;
+  -webkit-animation: blink 4s infinite ease-in;
+          animation: blink 4s infinite ease-in;
+}
+@-webkit-keyframes blink {
+  0% {
+    height: 0;
+  }
+  90% {
+    height: 0;
+  }
+  92.5% {
+    height: 100%;
+  }
+  95% {
+    height: 0;
+  }
+  97.5% {
+    height: 100%;
+  }
+  100% {
+    height: 0;
+  }
+}
+@keyframes blink {
+  0% {
+    height: 0;
+  }
+  90% {
+    height: 0;
+  }
+  92.5% {
+    height: 100%;
+  }
+  95% {
+    height: 0;
+  }
+  97.5% {
+    height: 100%;
+  }
+  100% {
+    height: 0;
+  }
+}
+.eye::before {
+  content: '';
+  position: absolute;
+  top: 60%;
+  height: 10%;
+  width: 15%;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.eye--left {
+  left: 0;
+  border-radius: 34% 78% 66% 65% / 47% 95% 26% 73%;
+}
+.eye--left::before {
+  right: -5%;
+}
+
+.eye--right {
+  right: 0;
+  border-radius: 78% 34% 65% 66% / 95% 47% 73% 26%;
+}
+.eye--right::before {
+  left: -5%;
+}
+
+.eye-pupil {
+  position: absolute;
+  top: 25%;
+  height: 50%;
+  width: 20%;
+  background: #161616;
+  border-radius: 50%;
+  -webkit-animation: look-around 4s infinite;
+          animation: look-around 4s infinite;
+}
+@-webkit-keyframes look-around {
+  0% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  5% {
+    -webkit-transform: translate(50%, -25%);
+            transform: translate(50%, -25%);
+  }
+  10% {
+    -webkit-transform: translate(50%, -25%);
+            transform: translate(50%, -25%);
+  }
+  15% {
+    -webkit-transform: translate(-100%, -25%);
+            transform: translate(-100%, -25%);
+  }
+  20% {
+    -webkit-transform: translate(-100%, -25%);
+            transform: translate(-100%, -25%);
+  }
+  25% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+}
+@keyframes look-around {
+  0% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  5% {
+    -webkit-transform: translate(50%, -25%);
+            transform: translate(50%, -25%);
+  }
+  10% {
+    -webkit-transform: translate(50%, -25%);
+            transform: translate(50%, -25%);
+  }
+  15% {
+    -webkit-transform: translate(-100%, -25%);
+            transform: translate(-100%, -25%);
+  }
+  20% {
+    -webkit-transform: translate(-100%, -25%);
+            transform: translate(-100%, -25%);
+  }
+  25% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+}
+.eye--left .eye-pupil {
+  right: 30%;
+}
+.eye--right .eye-pupil {
+  left: 30%;
+}
+.eye-pupil::after {
+  content: '';
+  position: absolute;
+  top: 30%;
+  right: -5%;
+  height: 20%;
+  width: 35%;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.muzzle {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  height: 6%;
+  width: 10%;
+  background: #fff;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+}
+
+/* General page styling */
+.cat-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 1rem;
+  z-index: 10000;
+}   
+</style>
+        
         <div>
         <form class="form">
         <h2>Add Quote</h2>
@@ -93,8 +356,25 @@ class AddQuoteView extends BaseView {
             Create
           </vaadin-button>
       </div>
-        </form>            
-    </div>`;
+        </form>
+        <div class="cat-container">
+            <div class="cat">
+                <div class="ear ear--left"></div>
+                <div class="ear ear--right"></div>
+                <div class="face">
+                    <div class="eye eye--left">
+                        <div class="eye-pupil"></div>
+                    </div>
+                    <div class="eye eye--right">
+                        <div class="eye-pupil"></div>
+                    </div>
+                    <div class="muzzle"></div>
+                </div>
+            </div>
+        </div>            
+    </div>
+
+`;
     }
 
     updateDisableSave() {

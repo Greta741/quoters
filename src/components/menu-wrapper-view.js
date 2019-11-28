@@ -90,6 +90,9 @@ class MenuWrapperView extends connect(store)(BaseView) {
         cursor: pointer;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
+      .sidebarMenuInner li:hover {
+        background: rgba(242, 240, 237, 0.2);
+      }
       .sidebarMenuInner li span {
         display: block;
         font-size: 14px;
@@ -189,8 +192,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
     </label>
     <div id="sidebarMenu">
       <ul class="sidebarMenuInner">
-        <li><a href="/">Current (Quotes)</a></li>
-        <li><a href="/quotes">Quotes</a></li>
+        <li><a href="/quotes">All Quotes</a></li>
         <li class="menu-header-no-click"><a>Boards:</a></li>
         ${
             this.boards.map(
@@ -201,12 +203,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
         }
       </ul>
     </div>
-    <div id="center" class="main center">
-      <div class="mainInner">
-        <div></div>
-      </div>
-    </div>
-
+    
     <div style="display: none">
       <a id="addQuote" href="/add-quote"></a>
       <a id="addBoard" href="/add-board"></a>

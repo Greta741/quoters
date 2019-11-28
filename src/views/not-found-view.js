@@ -4,7 +4,9 @@ import { BaseView } from './base-view.js';
 class NotFoundView extends BaseView {
   render() {
     return html`
-      <h1>Not found!</h1>
+    <div>
+        <h1 style="margin: 2rem auto; width: fit-content;}">Not found!</h1>
+    </div>
     `;
   }
 }
