@@ -5,7 +5,13 @@ import { BaseView } from '../views/base-view.js';
 
 class MenuWrapperView extends connect(store)(BaseView) {
     static get properties() {
-        return {};
+        return {
+            boards: { type: Array }
+        };
+    }
+
+    stateChanged(state) {
+        this.boards = state.boards;
     }
 
     render() {
@@ -98,7 +104,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
         cursor: pointer;
         text-decoration: none;
         display: block;
-        padding: 16px;
+        padding: 1rem;
       }
       input[type="checkbox"]:checked ~ #sidebarMenu {
         transform: translateX(0);
@@ -167,6 +173,13 @@ class MenuWrapperView extends connect(store)(BaseView) {
         transform: rotate(-135deg);
         margin-top: -9px;
       }
+      .menu-header-no-click {
+        pointer-events: none;
+        cursor: default !important;
+      }
+      .boards-menu-items {
+        padding-left: 2rem;
+      }
     </style>
 
     <div class="header"><h1>Quoters</h1></div>
@@ -180,7 +193,14 @@ class MenuWrapperView extends connect(store)(BaseView) {
       <ul class="sidebarMenuInner">
         <li><a href="/">Current (Quotes)</a></li>
         <li><a href="/quotes">Quotes</a></li>
-        <li><a href="/boards">Boards</a></li>
+        <li class="menu-header-no-click"><a>Boards:</a></li>
+        ${
+            this.boards.map(
+                board => html`
+                  <li><a class="boards-menu-items" href="/quotes/${board._id}">${board.name}</a></li>
+                `
+            )
+        }
       </ul>
     </div>
     <div id="center" class="main center">
