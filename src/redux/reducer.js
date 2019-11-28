@@ -1,41 +1,13 @@
-import { createSelector } from 'reselect';
-
 import {
   LOAD_BOARDS,
   LOAD_QUOTES,
 } from './actions.js';
+import {DISABLE_CENSOR} from "./actions";
 
 const INITIAL_STATE = {
-  quotes: [
-    {
-      quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
-      author: 'Internet',
-      board: '404'
-    },
-    {
-      quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
-      author: 'Internet',
-      board: '404'
-    },
-    {
-      quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
-      author: 'Internet',
-      board: '403'
-    },
-    {
-      quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
-      author: 'Internet',
-      board: '403'
-    },
-    {
-      quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
-      author: 'Internet',
-      board: '403'
-    },
-  ],
-  boards: ['404', '403'],
-  selectedRoom: null,
-  view: 'quote'
+  quotes: [],
+  boards: [],
+  disableCensor: false,
 };
 
 export const reducer = (state = INITIAL_STATE, action) => {
@@ -50,10 +22,25 @@ export const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         quotes: action.quotes
       };
+      case DISABLE_CENSOR:
+      return {
+        ...state,
+        disableCensor: true
+      };
     default:
       return state;
   }
 };
 
-export const getQuotesSelector = state => state.quotes;
+export const getQuotesSelector = state => {
+  return state.quotes.filter(quote => {
+    if (state.disableCensor) {
+      return quote;
+    }
+    if (!quote.censor) {
+      return quote;
+    }
+  });
+};
+
 const getSelectedBoardSelector = state => state.selectedBoard;
