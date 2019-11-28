@@ -7,9 +7,9 @@ import "../components/my-quote.js";
 import { HttpService } from "../redux/service";
 
 class MainView extends connect(store)(BaseView) {
-  currentQuote = 0;
-  progressWidth = 0;
-  progress = setInterval(this.timerProgress(), 40);
+  // currentQuote = 0;
+  // progressWidth = 0;
+  // progress = setInterval(this.timerProgress(), 40);
 
   constructor() {
     super();
