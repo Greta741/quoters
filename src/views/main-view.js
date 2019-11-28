@@ -7,6 +7,7 @@ import { store } from '../redux/store.js';
 import { BaseView } from './base-view.js';
 import '../components/my-quote.js';
 import { selectRoom } from '../redux/actions.js';
+import {setView} from "../redux/actions";
 
 class MainView extends connect(store)(BaseView) {
   static get properties() {
@@ -28,6 +29,7 @@ class MainView extends connect(store)(BaseView) {
   }
 
   render() {
+      store.dispatch(setView('quote'));
     this.updateQuotes();
 
     return html`

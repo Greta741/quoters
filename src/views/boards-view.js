@@ -2,6 +2,7 @@ import { html } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../redux/store.js';
 import { BaseView } from './base-view.js';
+import {setView} from "../redux/actions";
 
 class BoardsView extends connect(store)(BaseView) {
   static get properties() {
@@ -15,6 +16,8 @@ class BoardsView extends connect(store)(BaseView) {
   }
 
   render() {
+    store.dispatch(setView('board'));
+
     return html`
     ${
           this.boards.map(

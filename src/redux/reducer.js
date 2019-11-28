@@ -1,48 +1,54 @@
 import { createSelector } from 'reselect';
 
 import {
-  SELECT_ROOM
+  SELECT_BOARD,
+  SET_VIEW,
 } from './actions.js';
-
 
 const INITIAL_STATE = {
   quotes: [
     {
       quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
       author: 'Internet',
-      room: '404'
+      board: '404'
     },
     {
       quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
       author: 'Internet',
-      room: '404'
+      board: '404'
     },
     {
       quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
       author: 'Internet',
-      room: '403'
+      board: '403'
     },
     {
       quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
       author: 'Internet',
-      room: '403'
+      board: '403'
     },
     {
       quote: 'Etiam quam ante, scelerisque id mollis sit amet, finibus ut enim. Suspendisse vel erat et risus sodales mattis. In eget magna aliquam, condimentum metus dignissim, maximus erat. ',
       author: 'Internet',
-      room: '403'
+      board: '403'
     },
   ],
-  rooms: ['404', '403'],
+  boards: ['404', '403'],
   selectedRoom: null,
+  view: 'quote'
 };
 
 export const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SELECT_ROOM:
+    case SELECT_BOARD:
       return {
         ...state,
-        selectedRoom: action.room
+        selectedBoard: action.board
+      };
+    case SET_VIEW:
+      return {
+        ...state,
+        view: action.view
       };
     default:
       return state;
@@ -50,15 +56,16 @@ export const reducer = (state = INITIAL_STATE, action) => {
 };
 
 const getQuotesSelector = state => state.quotes;
-const getSelectedRoomSelector = state => state.selectedRoom;
+const getSelectedBoardSelector = state => state.selectedBoard;
+export const getSetView = state => state.view;
 
 export const getVisibleQuotes = createSelector(
   getQuotesSelector,
-  getSelectedRoomSelector,
-  (quotes, selectedRoom) => {
-    if (!selectedRoom) {
+  getSelectedBoardSelector,
+  (quotes, selectedBoard) => {
+    if (!selectedBoard) {
       return quotes
     }
-    return quotes.filter(quote => quote.room === selectedRoom)
+    return quotes.filter(quote => quote.board === selectedBoard)
   }
 );
