@@ -3,6 +3,9 @@ import './views/main-view.js';
 import "./components/menu-wrapper-view.js";
 import { Router } from '@vaadin/router';
 
+const axios = require("axios");
+const url = "http://localhost:443/api";
+
 const applicationServerPublicKey = 'BMYVXGAiH8NIYzb4IGxErYreG3EZb_TbX6uIcKIBbHiflixkDWQS55Ycrv6nZgMy7X-zk2WeeAzCoZXcrDTFSBY';
 
 let swRegistration = null;
@@ -30,11 +33,9 @@ function urlB64ToUint8Array(base64String) {
 
 function initServiceWorker() {
   if ('serviceWorker' in navigator && 'PushManager' in window) {
-    console.log('Service Worker and Push is supported');
 
     navigator.serviceWorker.register('sw.js')
         .then(function(swReg) {
-          console.log('Service Worker is registered', swReg);
 
           swRegistration = swReg;
           initializeUI();
@@ -52,11 +53,8 @@ function initializeUI() {
   swRegistration.pushManager.getSubscription()
       .then(function(subscription) {
         isSubscribed = !(subscription === null);
-        subscribeUser();
-        if (isSubscribed) {
-          console.log('User IS subscribed.');
-        } else {
-          console.log('User is NOT subscribed.');
+        if (!isSubscribed) {
+            subscribeUser();
         }
       });
 }
@@ -68,8 +66,6 @@ function subscribeUser() {
     applicationServerKey: applicationServerKey
   })
       .then(function(subscription) {
-        console.log('User is subscribed.');
-
         updateSubscriptionOnServer(subscription);
         isSubscribed = true;
       })
@@ -79,7 +75,7 @@ function subscribeUser() {
 }
 
 function updateSubscriptionOnServer(subscription) {
-  axios.post(`${url}/subscribe`, JSON.stringify(subscription)).then((result) => {
+  axios.post(`${url}/notification/register`, subscription).then((result) => {
     console.log(result);
   });
 }
