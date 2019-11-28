@@ -23,11 +23,10 @@ export class HttpService {
 
     async createNewQuote(quote) {
         const res = await axios.post(`${url}/quotes`, quote);
-        console.log(res)
+        return res;
     }
 
     async createBoard(board) {
         const res = await axios.post(`${url}/boards`, board);
-        console.log(res)
     }
 }
