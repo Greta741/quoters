@@ -167,7 +167,6 @@ class MainView extends connect(store)(BaseView) {
             <blockquote>
               <p class="quote">${this.quotes[this.currentQuote].text}</p>
               <p class="author">
-                ${this.currentQuote} - ${this.quotes[this.currentQuote].author},
                 ${this.quotes[this.currentQuote].date}
                 <span class="author-name"></span>
               </p>
