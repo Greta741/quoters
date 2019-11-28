@@ -16,6 +16,10 @@ class MainView extends connect(store)(BaseView) {
 
     this.currentQuote = 0;
     this.currentDate = "";
+
+    setTimeout(() => {
+      this.changeQuote();
+    }, 5000);
   }
 
   static get properties() {
@@ -40,7 +44,7 @@ class MainView extends connect(store)(BaseView) {
     }
     this.loaded = true;
 
-    const date = this.quotes.length && this.quotes[this.currentQuote].date;
+    const date = this.quotes[this.currentQuote].date;
     this.currentDate = moment(date).format("YYYY");
     console.log(this.currentDate);
   }
@@ -171,11 +175,10 @@ class MainView extends connect(store)(BaseView) {
           <div>
             <blockquote>
               <p class="quote">
-                ${this.quotes.length && this.quotes[this.currentQuote].text}
+                ${this.quotes[this.currentQuote].text}
               </p>
               <p class="author">
-                ${this.quotes.length && this.quotes[this.currentQuote].author},
-                ${this.currentDate}
+                ${this.quotes[this.currentQuote].author}, ${this.currentDate}
                 <span class="author-name"></span>
               </p>
             </blockquote>
