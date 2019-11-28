@@ -4,7 +4,7 @@ import "./components/menu-wrapper-view.js";
 import { Router } from '@vaadin/router';
 
 const axios = require("axios");
-const url = "http://localhost:443/api";
+const url = "https://quote-board.site/api";
 
 const applicationServerPublicKey = 'BMYVXGAiH8NIYzb4IGxErYreG3EZb_TbX6uIcKIBbHiflixkDWQS55Ycrv6nZgMy7X-zk2WeeAzCoZXcrDTFSBY';
 
@@ -75,9 +75,7 @@ function subscribeUser() {
 }
 
 function updateSubscriptionOnServer(subscription) {
-  axios.post(`${url}/notification/register`, subscription).then((result) => {
-    console.log(result);
-  });
+  axios.post(`${url}/notification/register`, subscription);
 }
 
 function initRouter() {
