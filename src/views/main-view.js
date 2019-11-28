@@ -16,6 +16,10 @@ class MainView extends connect(store)(BaseView) {
 
     this.currentQuote = 0;
     this.currentDate = "";
+
+    setTimeout(() => {
+      this.changeQuote();
+    }, 5000);
   }
 
   static get properties() {
@@ -40,9 +44,9 @@ class MainView extends connect(store)(BaseView) {
     }
     this.loaded = true;
 
-    this.currentDate = moment(this.quotes[this.currentQuote].date).format(
-      "YYYY"
-    );
+    const date = this.quotes[this.currentQuote].date;
+    this.currentDate = moment(date).format("YYYY");
+    console.log(this.currentDate);
   }
 
   getRandomQuote() {

@@ -52,7 +52,6 @@ function initRouter() {
 let acl = null;
 
 function doShakyShaky() {
-  alert ('shaky shaky will work')
   let shaking = false;
 
   function onreading() {
@@ -81,7 +80,7 @@ function startShakyShaky() {
   acl = new LinearAccelerationSensor({ frequency: 60 });
   acl.addEventListener("activate", doShakyShaky);
   acl.addEventListener("error", error => {
-    alert('no shaky shaky for you')
+    // alert('no shaky shaky for you')
   });
   acl.start();
 }
