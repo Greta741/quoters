@@ -157,6 +157,11 @@ class MainView extends connect(store)(BaseView) {
           margin: auto;
         }
 
+        .fa {
+          font-size: 2rem;
+          color: #000;
+        }
+
         /* Media Queries */
         @media screen and (max-width: 460px) {
           .panel-quote {
