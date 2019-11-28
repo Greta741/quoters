@@ -3,7 +3,7 @@ import {loadBoards, loadQuotes} from "./actions";
 
 const axios = require('axios');
 
-const url = 'http://167.172.178.149:3000/api';
+const url = 'http://167.172.178.149:80/api';
 
 export class HttpService {
 
