@@ -408,9 +408,11 @@ class AddQuoteView extends BaseView {
 
     async createQuote() {
         const quote = {
+            quote: {
                 text: this.text,
                 author: this.author,
                 censor: this.censor,
+            },
             secret: this.secret,
         };
 
