@@ -20,7 +20,7 @@ class BoardsView extends connect(store)(BaseView) {
     ${
           this.boards.map(
             board => html`
-                  <a href="/quotes/${board}">${board}</a>
+                  <a href="/quotes/${board._id}">${board.name}</a>
                 `
           )
         }

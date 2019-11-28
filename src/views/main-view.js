@@ -1,32 +1,44 @@
 import { html } from "lit-html";
-import { getVisibleQuotes } from "../redux/reducer.js";
+import { getQuotesSelector } from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
 import { BaseView } from "./base-view.js";
 import "../components/my-quote.js";
-import { selectRoom } from "../redux/actions.js";
+import {HttpService} from "../redux/service";
 
 class MainView extends connect(store)(BaseView) {
-  static get properties() {
-    return {
-      quotes: { type: Array }
-    };
-  }
+    constructor() {
+        super();
 
-  stateChanged(state) {
-    this.quotes = getVisibleQuotes(state);
-  }
-
-  updateQuotes() {
-    if (this.location.params.room) {
-      store.dispatch(selectRoom(this.location.params.room));
-    } else {
-      store.dispatch(selectRoom(null));
+        this.httpService = new HttpService();
+        this.loaded = false;
     }
-  }
+
+    static get properties() {
+        return {
+            quotes: {type: Array}
+        };
+    }
+
+    stateChanged(state) {
+        this.quotes = getQuotesSelector(state);
+    }
+
+    loadQuotes() {
+        if (this.loaded) {
+            return;
+        }
+        const board = this.location.params.board;
+        if (board) {
+            this.httpService.getQuotes(board)
+        } else {
+            this.httpService.getQuotes(null)
+        }
+        this.loaded = true;
+    }
 
   render() {
-    this.updateQuotes();
+      this.loadQuotes();
 
     return html`
       <style>
