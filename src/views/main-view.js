@@ -101,13 +101,11 @@ class MainView extends connect(store)(BaseView) {
 
         .panel-quote {
           position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          min-width: 400px;
-          margin: auto;
-          box-sizing: border-box;
+          top: 0;
+          width: 100%;
           opacity: 0.85;
+          height: 100%;
+          margin: 0;
         }
 
         .social-share {
@@ -157,7 +155,7 @@ class MainView extends connect(store)(BaseView) {
         }
 
         .fa {
-          font-size: 2rem;
+          font-size: 3.5rem;
           color: #000;
         }
 
