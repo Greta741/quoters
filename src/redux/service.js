@@ -3,10 +3,9 @@ import {loadBoards, loadQuotes} from "./actions";
 
 const axios = require('axios');
 
-const url = 'http://167.172.178.149:3000';
+const url = 'http://167.172.178.149:3000/api';
 
 export class HttpService {
-
 
     async getBoards() {
         const result = await axios.get(`${url}/boards`);
@@ -22,7 +21,13 @@ export class HttpService {
         store.dispatch(loadQuotes(result.data));
     }
 
-    // createNewQuote(quote) {
-    //     axios.post('http://167.172.178.149:3000/quotes')
-    // }
+    async createNewQuote(quote) {
+        const res = await axios.post(`${url}/quotes`, quote);
+        console.log(res)
+    }
+
+    async createBoard(board) {
+        const res = await axios.post(`${url}/boards`, board);
+        console.log(res)
+    }
 }
