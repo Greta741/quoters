@@ -107,7 +107,7 @@ class MainView extends connect(store)(BaseView) {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          min-width: 400px;
+          min-width: 60%;
           margin: auto;
           box-sizing: border-box;
           background-color: #fff;
@@ -129,12 +129,17 @@ class MainView extends connect(store)(BaseView) {
 
         blockquote {
           padding: 30px;
-          font-size: 1.4em;
+          font-size: 3em;
         }
 
         .quote {
-          font-family: "Crimson Text", serif;
-          font-style: italic;
+          font-family: "Courgette", cursive;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-family: "Arizonia", cursive;
+            font-size: 10rem;
         }
 
         .author {
