@@ -8,6 +8,7 @@
     "webpack": "webpack",
     "webpack-dev-server": "webpack-dev-server --history-api-fallback",
     "prod": "npm run webpack -- --env.mode production --env.presets serviceworker",
+    "start": "npm run prod",
     "dev": "npm run webpack-dev-server -- --env.mode development --host 0.0.0.0",
     "dev:sw": "npm run webpack-dev-server -- --env.mode development  --env.presets serviceworker"
   },
