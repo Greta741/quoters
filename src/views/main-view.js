@@ -15,7 +15,9 @@ class MainView extends connect(store)(BaseView) {
 
     this.currentQuote = 0;
     this.currentDate = new Date().getFullYear();
-    this.randomColor = "";
+    this.randomColor = `#${Math.random()
+      .toString(16)
+      .substr(-6)}`;
 
     setTimeout(() => {
       this.changeQuote();
@@ -60,9 +62,6 @@ class MainView extends connect(store)(BaseView) {
     } else {
       this.currentQuote = 0;
     }
-    this.randomColor = `#${Math.random()
-      .toString(16)
-      .substr(-6)}`;
 
     this.setQuote();
   }
