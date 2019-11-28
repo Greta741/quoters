@@ -2,6 +2,7 @@ import {html} from 'lit-element';
 import {BaseView} from './base-view.js';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-text-field/vaadin-text-area'
+import '@vaadin/vaadin-text-field/vaadin-password-field'
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
 
@@ -58,12 +59,12 @@ class AddQuoteView extends BaseView {
          </div>
          
          <div>
-             <vaadin-text-field
+             <vaadin-password-field
                     label="Board secret"
                    placeholder="Board secret"
                    value="${this.secret}"
                    @change="${this.updateSecret}">
-             </vaadin-text-field>
+             </vaadin-password-field>
        </div>
         
        <div class="form-buttons">

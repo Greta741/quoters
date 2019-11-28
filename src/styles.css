@@ -131,7 +131,7 @@ ul {
     width: 20rem;
 }
 
-vaadin-text-area, vaadin-text-field {
+vaadin-text-area, vaadin-text-field, vaadin-password-field {
     width: 100%;
 }
 
