@@ -1,41 +1,40 @@
-import {html} from 'lit-element';
-import {BaseView} from './base-view.js';
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-text-field/vaadin-text-area'
-import '@vaadin/vaadin-text-field/vaadin-password-field'
-import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-checkbox';
-import {HttpService} from "../redux/service";
+import { html } from "lit-element";
+import { BaseView } from "./base-view.js";
+import "@vaadin/vaadin-text-field";
+import "@vaadin/vaadin-text-field/vaadin-text-area";
+import "@vaadin/vaadin-text-field/vaadin-password-field";
+import "@vaadin/vaadin-button";
+import "@vaadin/vaadin-checkbox";
+import { HttpService } from "../redux/service";
 
 class AddQuoteView extends BaseView {
-    static get properties() {
-        return {
-            text: {type: String},
-            author: {type: String},
-            censor: {type: Boolean},
-            secret: {type: String},
-            disableSave: {type: Boolean},
-            error: {type: Boolean},
-        };
-    }
+  static get properties() {
+    return {
+      text: { type: String },
+      author: { type: String },
+      censor: { type: Boolean },
+      secret: { type: String },
+      disableSave: { type: Boolean },
+      error: { type: Boolean }
+    };
+  }
 
-    constructor() {
-        super();
-        this.text = '';
-        this.author = '';
-        this.censor = true;
-        this.secret = '';
-        this.disableSave = true;
-        this.error = false;
+  constructor() {
+    super();
+    this.text = "";
+    this.author = "";
+    this.censor = true;
+    this.secret = "";
+    this.disableSave = true;
+    this.error = false;
 
-        this.httpService = new HttpService();
-    }
+    this.httpService = new HttpService();
+  }
 
-
-    render() {
-        return html`
+  render() {
+    return html`
         <link rel="stylesheet" type="text/css" href="../styles.css" media="all" />
-        
+
 <style>
 .cat {
   position: relative;
@@ -295,15 +294,142 @@ class AddQuoteView extends BaseView {
   top: 0;
   right: 1rem;
   z-index: 10000;
-}   
+}
+
+.quote-header {
+  font-family: "Fredericka the Great", cursive;
+}
+
+.box{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30rem;
+  height: 30rem;
+  background: #033d68a6;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgb(23, 32, 90);
+  border: 2px solid #2a3cad;
+  color: white;
+  padding: 20px;
+}
+
+.box:before{
+  content: '';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background: rgba(255,255,255,0.1);
+  transition:0.5s;
+  pointer-events: none;
+}
+
+.box:hover:before{
+  left:-50%;
+  transform: skewX(-5deg);
+}
+
+.box span{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  box-sizing: border-box;
+
+}
+
+.box span:nth-child(1)
+{
+  transform:rotate(0deg);
+}
+
+.box span:nth-child(2)
+{
+  transform:rotate(90deg);
+}
+
+.box span:nth-child(3)
+{
+  transform:rotate(180deg);
+}
+
+.box span:nth-child(4)
+{
+  transform:rotate(270deg);
+}
+
+.box span:before
+{
+  content: '';
+  position: absolute;
+  width:100%;
+  height: 2px;
+  background: #50dfdb;
+  animation: animate 4s linear infinite;
+}
+
+.box .form-container{
+  position:absolute;
+  top:15px;
+  left:15px;
+  right:15px;
+  bottom:15px;
+  border:1px solid #f0a591;
+  background: #c6cacc;
+  padding:20px;
+  text-align:center;
+  box-shadow: 0 5px 10px rgba(9,0,0,0.5);
+}
+
+@keyframes animate {
+  0% {
+    transform:scaleX(0);
+    transform-origin: left;
+  }
+  50%
+  {
+    transform:scaleX(1);
+    transform-origin: left;
+  }
+  50.1%
+  {
+    transform:scaleX(1);
+    transform-origin: right;
+  }
+  100%
+  {
+    transform:scaleX(0);
+    transform-origin: right;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .box{
+  width: 100%;
+ }
+}
+
 </style>
-        
-        <div>
+
+     <div class="box">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="form-container">
         <form class="form">
-        <h2>Add Quote</h2>
-        
-        <div class="${this.error ? 'error' : 'no-display'}"">Better luck next time</div>
-        
+        <h2 class="quote-header">Add Quote</h2>
+
+        <div class="${
+          this.error ? "error" : "no-display"
+        }"">Better luck next time</div>
+
         <div>
             <vaadin-text-area
                 label="Quote text"
@@ -314,7 +440,7 @@ class AddQuoteView extends BaseView {
                 @change="${this.updateText}">
             </vaadin-text-area>
          </div>
-            
+
          <div>
              <vaadin-text-field
                    label="Quote author"
@@ -325,7 +451,7 @@ class AddQuoteView extends BaseView {
                    @change="${this.updateAuthor}">
              </vaadin-text-field>
          </div>
-         
+
          <div>
              <label>NSFW</label>
              <vaadin-checkbox
@@ -333,7 +459,7 @@ class AddQuoteView extends BaseView {
                    @change="${this.updateCensor}">
              </vaadin-checkbox>
          </div>
-         
+
          <div>
              <vaadin-password-field
                     label="Board secret"
@@ -344,7 +470,7 @@ class AddQuoteView extends BaseView {
                    @change="${this.updateSecret}">
              </vaadin-password-field>
        </div>
-        
+
        <div class="form-buttons">
           <vaadin-button @click="${this.cancel}">
             Cancel
@@ -371,66 +497,65 @@ class AddQuoteView extends BaseView {
                     <div class="muzzle"></div>
                 </div>
             </div>
-        </div>            
+        </div>
     </div>
-
+  </div>
 `;
+  }
+
+  updateDisableSave() {
+    this.error = false;
+    if (this.text && this.secret && this.secret) {
+      this.disableSave = false;
+      return;
     }
+    this.disableSave = true;
+  }
 
-    updateDisableSave() {
-        this.error = false;
-        if (this.text && this.secret && this.secret) {
-            this.disableSave = false;
-            return;
-        }
-        this.disableSave = true;
+  updateText(e) {
+    this.text = e.target.value;
+    this.updateDisableSave();
+  }
+
+  updateAuthor(e) {
+    this.author = e.target.value;
+    this.updateDisableSave();
+  }
+
+  updateCensor(e) {
+    this.censor = e.target.checked;
+  }
+
+  updateSecret(e) {
+    this.secret = e.target.value;
+    this.updateDisableSave();
+  }
+
+  async createQuote() {
+    const quote = {
+      quote: {
+        text: this.text,
+        author: this.author,
+        censor: this.censor
+      },
+      secret: this.secret
+    };
+
+    try {
+      const res = await this.httpService.createNewQuote(quote);
+      if (res.data.status === 404) {
+        this.error = true;
+        return;
+      }
+      window.history.back();
+    } catch (e) {
+      this.error = true;
     }
+  }
 
-
-    updateText(e) {
-        this.text = e.target.value;
-        this.updateDisableSave();
-    }
-
-    updateAuthor(e) {
-        this.author = e.target.value;
-        this.updateDisableSave();
-    }
-
-    updateCensor(e) {
-        this.censor = e.target.checked
-    }
-
-    updateSecret(e) {
-        this.secret = e.target.value;
-        this.updateDisableSave();
-    }
-
-    async createQuote() {
-        const quote = {
-            quote: {
-                text: this.text,
-                author: this.author,
-                censor: this.censor,
-            },
-            secret: this.secret,
-        };
-
-        try {
-            const res = await this.httpService.createNewQuote(quote);
-            if (res.data.status === 404) {
-                this.error = true;
-                return;
-            }
-            window.history.back();
-        } catch (e) {
-            this.error = true;
-        }
-    }
-
-    cancel() {
-        window.history.back();
-    }
+  cancel() {
+    window.history.back();
+  }
 }
 
-customElements.define('add-quote-view', AddQuoteView);
+customElements.define("add-quote-view", AddQuoteView);

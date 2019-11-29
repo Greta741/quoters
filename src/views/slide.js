@@ -1,52 +1,52 @@
 var listQuotes = [
   {
     quote:
-      "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.",
-    author: "Buddha"
+      'Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.',
+    author: 'Buddha'
   },
   {
     quote:
-      "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
-    author: "Albert Einstein"
+      'Two things are infinite: the universe and human stupidity; and I\'m not sure about the universe.',
+    author: 'Albert Einstein'
   },
   {
     quote:
-      "Be who you are and say what you feel, because those who mind don't matter, and those who matter don't mind.",
-    author: "Bernard M. Baruch"
+      'Be who you are and say what you feel, because those who mind don\'t matter, and those who matter don\'t mind.',
+    author: 'Bernard M. Baruch'
   },
   {
-    quote: "A room without books is like a body without a soul.",
-    author: "Marcus Tullius Cicero"
+    quote: 'A room without books is like a body without a soul.',
+    author: 'Marcus Tullius Cicero'
   },
   {
-    quote: "You only live once, but if you do it right, once is enough.",
-    author: "Mae West"
+    quote: 'You only live once, but if you do it right, once is enough.',
+    author: 'Mae West'
   },
   {
-    quote: "Be the change that you wish to see in the world.",
-    author: "Mahatma Gandhi"
-  },
-  {
-    quote:
-      "If you want to know what a man's like, take a good look at how he treats his inferiors, not his equals.",
-    author: "J.K. Rowling, Harry Potter and the Goblet of Fire"
-  },
-  {
-    quote: "No one can make you feel inferior without your consent.",
-    author: "Eleanor Roosevelt, This is My Story"
-  },
-  {
-    quote: "If you tell the truth, you don't have to remember anything.",
-    author: "Mark Twain"
+    quote: 'Be the change that you wish to see in the world.',
+    author: 'Mahatma Gandhi'
   },
   {
     quote:
-      "You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.",
-    author: "William W. Purkey"
+      'If you want to know what a man\'s like, take a good look at how he treats his inferiors, not his equals.',
+    author: 'J.K. Rowling, Harry Potter and the Goblet of Fire'
   },
   {
-    quote: "Be yourself; everyone else is already taken.",
-    author: "Oscar Wilde"
+    quote: 'No one can make you feel inferior without your consent.',
+    author: 'Eleanor Roosevelt, This is My Story'
+  },
+  {
+    quote: 'If you tell the truth, you don\'t have to remember anything.',
+    author: 'Mark Twain'
+  },
+  {
+    quote:
+      'You\'ve gotta dance like there\'s nobody watching, Love like you\'ll never be hurt, Sing like there\'s nobody listening, And live like it\'s heaven on earth.',
+    author: 'William W. Purkey'
+  },
+  {
+    quote: 'Be yourself; everyone else is already taken.',
+    author: 'Oscar Wilde'
   }
 ];
 
@@ -58,7 +58,7 @@ var progressWidth = 0;
 // var timer = setInterval(changeQuote, timeDisplayed);
 
 function timerProgress() {
-  $(".quote-progress").width(progressWidth + "%");
+  $('.quote-progress').width(progressWidth + '%');
   if (progressWidth < 100) {
     progressWidth += 0.1;
   } else {
@@ -68,8 +68,8 @@ function timerProgress() {
 }
 
 function setQuote() {
-  $(".quote").html('"' + listQuotes[currentQuote].quote + '"');
-  $(".author-name").html(listQuotes[currentQuote].author);
+  $('.quote').html('"' + listQuotes[currentQuote].quote + '"');
+  $('.author-name').html(listQuotes[currentQuote].author);
   tweetQuote();
 }
 
@@ -88,7 +88,7 @@ function changeQuote() {
   setQuote();
 }
 
-$(".previous").click(function() {
+$('.previous').click(function() {
   if (currentQuote > 0) {
     currentQuote--;
   } else {
@@ -98,14 +98,14 @@ $(".previous").click(function() {
   progressWidth = 0;
 });
 
-$(".next").click(function() {
-  console.log("NEXT");
+$('.next').click(function() {
+  console.log('NEXT');
 
   changeQuote();
   progressWidth = 0;
 });
 
-$(".random").click(function() {
+$('.random').click(function() {
   getRandomQuote();
   progressWidth = 0;
 });
@@ -115,10 +115,10 @@ window.twttr = (function(d, s, id) {
   var js,
     fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
-  if (d.getElementById(id)) return t;
+  if (d.getElementById(id)) {return t;}
   js = d.createElement(s);
   js.id = id;
-  js.src = "https://platform.twitter.com/widgets.js";
+  js.src = 'https://platform.twitter.com/widgets.js';
   fjs.parentNode.insertBefore(js, fjs);
 
   t._e = [];
@@ -127,12 +127,12 @@ window.twttr = (function(d, s, id) {
   };
 
   return t;
-})(document, "script", "twitter-wjs");
+})(document, 'script', 'twitter-wjs');
 
 function tweetQuote() {
-  $("#quote-tweet").attr(
-    "href",
-    "https://twitter.com/intent/tweet?hashtags=quote,inspiration&text=" +
+  $('#quote-tweet').attr(
+    'href',
+    'https://twitter.com/intent/tweet?hashtags=quote,inspiration&text=' +
       encodeURIComponent(
         '"' +
           listQuotes[currentQuote].quote +

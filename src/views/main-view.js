@@ -1,10 +1,10 @@
-import { html } from "lit-html";
-import { getQuotesSelector } from "../redux/reducer.js";
-import { connect } from "pwa-helpers";
-import { store } from "../redux/store.js";
-import { BaseView } from "./base-view.js";
-import "../components/my-quote.js";
-import { HttpService } from "../redux/service";
+import { html } from 'lit-html';
+import { getQuotesSelector } from '../redux/reducer.js';
+import { connect } from 'pwa-helpers';
+import { store } from '../redux/store.js';
+import { BaseView } from './base-view.js';
+import '../components/my-quote.js';
+import { HttpService } from '../redux/service';
 
 class MainView extends connect(store)(BaseView) {
   constructor() {
@@ -95,10 +95,6 @@ class MainView extends connect(store)(BaseView) {
           opacity: 1;
         }
 
-        .container {
-          margin: 5rem auto;
-        }
-
         .panel-quote {
           position: absolute;
           top: 0;
@@ -138,15 +134,16 @@ class MainView extends connect(store)(BaseView) {
         }
 
         .quote::before {
-            content: '"';
-            font-family: "Arizonia", cursive;
-            font-size: 10rem;
+          content: '"';
+          font-family: "Arizonia", cursive;
+          font-size: 10rem;
         }
 
         .author {
           font-size: 0.6em;
           font-weight: lighter;
           text-align: right;
+          font-family: "Fredericka the Great", cursive;
         }
 
         /* Quote Navigation */
@@ -177,25 +174,25 @@ class MainView extends connect(store)(BaseView) {
           }
 
           blockquote {
-            font-size: 1.1em;
+            font-size: 2em;
           }
         }
       </style>
 
       <div class="container">
-        <div class="panel-quote" style="background-color: ${this.randomColor}">
+        <div class="panel-quote" style="background: linear-gradient(to right, ${this.randomColor}, #4f99ba)">
           <div class="quote-progress"></div>
           <div>
             <blockquote>
               <p class="quote">
                 ${this.quotes && this.quotes[this.currentQuote]
-                  ? this.quotes[this.currentQuote].text
-                  : ""}
+    ? this.quotes[this.currentQuote].text
+    : 'fdsh fdjsk jf lkdsds flkj dlskjf lkdjs'}
               </p>
               <p class="author">
                 ${this.quotes && this.quotes[this.currentQuote]
-                  ? this.quotes[this.currentQuote].author
-                  : ""},
+    ? this.quotes[this.currentQuote].author
+    : 'Paulius'},
                 ${this.currentDate}
                 <span class="author-name"></span>
               </p>
@@ -218,4 +215,4 @@ class MainView extends connect(store)(BaseView) {
   }
 }
 
-customElements.define("main-view", MainView);
+customElements.define('main-view', MainView);
