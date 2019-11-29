@@ -187,12 +187,12 @@ class MainView extends connect(store)(BaseView) {
               <p class="quote">
                 ${this.quotes && this.quotes[this.currentQuote]
     ? this.quotes[this.currentQuote].text
-    : 'fdsh fdjsk jf lkdsds flkj dlskjf lkdjs'}
+    : ''}
               </p>
               <p class="author">
                 ${this.quotes && this.quotes[this.currentQuote]
     ? this.quotes[this.currentQuote].author
-    : 'Paulius'},
+    : ''},
                 ${this.currentDate}
                 <span class="author-name"></span>
               </p>
