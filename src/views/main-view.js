@@ -125,7 +125,7 @@ class MainView extends connect(store)(BaseView) {
         }
 
         blockquote {
-          padding: 30px;
+          padding: 30px 15rem;
           font-size: 3em;
         }
 
@@ -143,7 +143,7 @@ class MainView extends connect(store)(BaseView) {
           font-size: 0.6em;
           font-weight: lighter;
           text-align: right;
-          font-family: "Fredericka the Great", cursive;
+          font-family: "Montserrat", cursive;
         }
 
         /* Quote Navigation */
@@ -174,6 +174,7 @@ class MainView extends connect(store)(BaseView) {
           }
 
           blockquote {
+            padding: 30px;
             font-size: 2em;
           }
         }
