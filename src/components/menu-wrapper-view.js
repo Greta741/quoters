@@ -43,7 +43,6 @@ class MenuWrapperView extends connect(store)(BaseView) {
         .header {
           display: block;
           margin: 0 auto;
-          border-bottom: 3px solid #2fcf0b;
           width: 100%;
           max-width: 100%;
           box-shadow: none;
@@ -87,7 +86,7 @@ class MenuWrapperView extends connect(store)(BaseView) {
           margin-top: 60px;
           transform: translateX(-250px);
           transition: transform 250ms ease-in-out;
-          background: linear-gradient(180deg, #2d3142 0%, #c52184 100%);
+          background: linear-gradient(180deg, #2d3142 0%, #513B56 100%);
           font-family: "Montserrat", sans-serif;
         }
         .sidebarMenuInner {
