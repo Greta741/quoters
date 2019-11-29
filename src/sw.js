@@ -6,3 +6,11 @@ self.addEventListener('push', ev => {
         console.log('error', error);
     });
 });
+
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close();
+
+    event.waitUntil(
+        clients.openWindow('https://quote-board.site/')
+    );
+});
