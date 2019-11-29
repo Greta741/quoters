@@ -35,7 +35,7 @@ class AddBoardView extends BaseView {
         <span></span>
         <div class="form-container">
         <form class="form">
-        <h2 class="board-header">Add Board</h2>
+        <h2>Add Board</h2>
 
         <div class="${
           this.error ? "error" : "no-display"

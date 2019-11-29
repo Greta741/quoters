@@ -180,19 +180,23 @@ class MainView extends connect(store)(BaseView) {
       </style>
 
       <div class="container">
-        <div class="panel-quote" style="background: linear-gradient(to right, ${this.randomColor}, #4f99ba)">
+        <div
+          class="panel-quote"
+          style="background: linear-gradient(to right, ${this
+    .randomColor}, #4f99ba)"
+        >
           <div class="quote-progress"></div>
           <div>
             <blockquote>
               <p class="quote">
                 ${this.quotes && this.quotes[this.currentQuote]
     ? this.quotes[this.currentQuote].text
-    : ''}
+    : 'Week on Access'}
               </p>
               <p class="author">
                 ${this.quotes && this.quotes[this.currentQuote]
     ? this.quotes[this.currentQuote].author
-    : ''},
+    : 'MArijus'},
                 ${this.currentDate}
                 <span class="author-name"></span>
               </p>
