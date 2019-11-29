@@ -1,41 +1,40 @@
-import {html} from 'lit-element';
-import {BaseView} from './base-view.js';
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-text-field/vaadin-text-area'
-import '@vaadin/vaadin-text-field/vaadin-password-field'
-import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-checkbox';
-import {HttpService} from "../redux/service";
+import { html } from "lit-element";
+import { BaseView } from "./base-view.js";
+import "@vaadin/vaadin-text-field";
+import "@vaadin/vaadin-text-field/vaadin-text-area";
+import "@vaadin/vaadin-text-field/vaadin-password-field";
+import "@vaadin/vaadin-button";
+import "@vaadin/vaadin-checkbox";
+import { HttpService } from "../redux/service";
 
 class AddQuoteView extends BaseView {
-    static get properties() {
-        return {
-            text: {type: String},
-            author: {type: String},
-            censor: {type: Boolean},
-            secret: {type: String},
-            disableSave: {type: Boolean},
-            error: {type: Boolean},
-        };
-    }
+  static get properties() {
+    return {
+      text: { type: String },
+      author: { type: String },
+      censor: { type: Boolean },
+      secret: { type: String },
+      disableSave: { type: Boolean },
+      error: { type: Boolean }
+    };
+  }
 
-    constructor() {
-        super();
-        this.text = '';
-        this.author = '';
-        this.censor = true;
-        this.secret = '';
-        this.disableSave = true;
-        this.error = false;
+  constructor() {
+    super();
+    this.text = "";
+    this.author = "";
+    this.censor = true;
+    this.secret = "";
+    this.disableSave = true;
+    this.error = false;
 
-        this.httpService = new HttpService();
-    }
+    this.httpService = new HttpService();
+  }
 
-
-    render() {
-        return html`
+  render() {
+    return html`
         <link rel="stylesheet" type="text/css" href="../styles.css" media="all" />
-        
+
 <style>
 .cat {
   position: relative;
@@ -295,15 +294,19 @@ class AddQuoteView extends BaseView {
   top: 0;
   right: 1rem;
   z-index: 10000;
-}   
+}
+
 </style>
-        
-        <div>
+
+<div class="box">
+<div class="form-container">
         <form class="form">
         <h2>Add Quote</h2>
-        
-        <div class="${this.error ? 'error' : 'no-display'}"">Better luck next time</div>
-        
+
+        <div class="${
+          this.error ? "error" : "no-display"
+        }"">Better luck next time</div>
+
         <div>
             <vaadin-text-area
                 label="Quote text"
@@ -314,7 +317,7 @@ class AddQuoteView extends BaseView {
                 @change="${this.updateText}">
             </vaadin-text-area>
          </div>
-            
+
          <div>
              <vaadin-text-field
                    label="Quote author"
@@ -325,7 +328,7 @@ class AddQuoteView extends BaseView {
                    @change="${this.updateAuthor}">
              </vaadin-text-field>
          </div>
-         
+
          <div>
              <label>NSFW</label>
              <vaadin-checkbox
@@ -333,7 +336,7 @@ class AddQuoteView extends BaseView {
                    @change="${this.updateCensor}">
              </vaadin-checkbox>
          </div>
-         
+
          <div>
              <vaadin-password-field
                     label="Board secret"
@@ -344,7 +347,7 @@ class AddQuoteView extends BaseView {
                    @change="${this.updateSecret}">
              </vaadin-password-field>
        </div>
-        
+
        <div class="form-buttons">
           <vaadin-button @click="${this.cancel}">
             Cancel
@@ -371,66 +374,67 @@ class AddQuoteView extends BaseView {
                     <div class="muzzle"></div>
                 </div>
             </div>
-        </div>            
+        </div>
     </div>
 
+</div>
+
 `;
+  }
+
+  updateDisableSave() {
+    this.error = false;
+    if (this.text && this.secret && this.secret) {
+      this.disableSave = false;
+      return;
     }
+    this.disableSave = true;
+  }
 
-    updateDisableSave() {
-        this.error = false;
-        if (this.text && this.secret && this.secret) {
-            this.disableSave = false;
-            return;
-        }
-        this.disableSave = true;
+  updateText(e) {
+    this.text = e.target.value;
+    this.updateDisableSave();
+  }
+
+  updateAuthor(e) {
+    this.author = e.target.value;
+    this.updateDisableSave();
+  }
+
+  updateCensor(e) {
+    this.censor = e.target.checked;
+  }
+
+  updateSecret(e) {
+    this.secret = e.target.value;
+    this.updateDisableSave();
+  }
+
+  async createQuote() {
+    const quote = {
+      quote: {
+        text: this.text,
+        author: this.author,
+        censor: this.censor
+      },
+      secret: this.secret
+    };
+
+    try {
+      const res = await this.httpService.createNewQuote(quote);
+      if (res.data.status === 404) {
+        this.error = true;
+        return;
+      }
+      window.history.back();
+    } catch (e) {
+      this.error = true;
     }
+  }
 
-
-    updateText(e) {
-        this.text = e.target.value;
-        this.updateDisableSave();
-    }
-
-    updateAuthor(e) {
-        this.author = e.target.value;
-        this.updateDisableSave();
-    }
-
-    updateCensor(e) {
-        this.censor = e.target.checked
-    }
-
-    updateSecret(e) {
-        this.secret = e.target.value;
-        this.updateDisableSave();
-    }
-
-    async createQuote() {
-        const quote = {
-            quote: {
-                text: this.text,
-                author: this.author,
-                censor: this.censor,
-            },
-            secret: this.secret,
-        };
-
-        try {
-            const res = await this.httpService.createNewQuote(quote);
-            if (res.data.status === 404) {
-                this.error = true;
-                return;
-            }
-            window.history.back();
-        } catch (e) {
-            this.error = true;
-        }
-    }
-
-    cancel() {
-        window.history.back();
-    }
+  cancel() {
+    window.history.back();
+  }
 }
 
-customElements.define('add-quote-view', AddQuoteView);
+customElements.define("add-quote-view", AddQuoteView);

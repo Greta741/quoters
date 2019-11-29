@@ -1,12 +1,12 @@
-import { html } from "lit-html";
-import { LitElement } from "lit-element";
+import { html } from 'lit-html';
+import { LitElement } from 'lit-element';
 
 class MyQuote extends LitElement {
   constructor(quoteText, qouteAuthor) {
     super();
 
-    this.quoteText = quoteText || "";
-    this.qouteAuthor = qouteAuthor || "";
+    this.quoteText = quoteText || '';
+    this.qouteAuthor = qouteAuthor || '';
   }
 
   static get properties() {
@@ -23,4 +23,4 @@ class MyQuote extends LitElement {
   }
 }
 
-customElements.define("my-quote", MyQuote);
+customElements.define('my-quote', MyQuote);
